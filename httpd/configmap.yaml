@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  index.html: "<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n
+    \   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n
+    \   <title>Document</title>\r\n</head>\r\n\r\n<body>\r\n    <h1>Hello World</h1>\r\n\r\n</body>\r\n\r\n</html>"
+kind: ConfigMap
+metadata:
+  name: httpd-html
+  namespace: k8s-collections
