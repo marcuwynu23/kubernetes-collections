@@ -1,21 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vite-app-sample
+  name: vite-app-sample-deployment
   namespace: k8s-collections
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vite-app-sample
+      app: vite-app-sample-deployment
   template:
     metadata:
       labels:
-        app: vite-app-sample
+        app: vite-app-sample-deployment
     spec:
       containers:
         - name: vite-app-sample
           image: ghcr.io/marcuwynu23/vite-app-sample:latest
           ports:
             - containerPort: 80
-            
