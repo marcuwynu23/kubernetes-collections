@@ -1,11 +1,82 @@
 # Kubernetes Application Collections
 
-This Collections contains kubernetes aplications
+A curated collection of Kubernetes application manifests and examples for learning, testing, and deployment.
 
-## Guide
+---
 
-## Contrubutions
+## Overview
+
+This repository contains reusable Kubernetes configurations such as:
+
+- Deployments
+- Services
+- Ingress resources
+- Sample applications (e.g., NGINX, Apache HTTPD)
+
+It is designed to help developers and DevOps engineers quickly experiment with and understand Kubernetes workloads.
+
+---
+
+## Getting Started
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/marcuwynu23/k8s-collections
+   ```
+
+2. Navigate to a specific application folder:
+
+   ```bash
+   cd httpd
+   ```
+
+3. Apply the manifests:
+
+   ```bash
+   kubectl apply -f .
+   ```
+
+4. Verify resources:
+
+   ```bash
+   kubectl get pods,svc
+   ```
+
+---
+
+## Repository Structure
+
+```
+.
+├── nginx/
+│   ├── deployment.yaml
+│   └── service.yaml
+├── httpd/
+│   ├── deployment.yaml
+│   └── service.yaml
+└── README.md
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! To get started:
+
+1. Fork the repository
+2. Create a new branch
+3. Add or improve Kubernetes manifests
+4. Submit a pull request
+
+Please ensure:
+
+- YAML files are valid and well-formatted
+- Resources are properly labeled
+- Examples are simple and reproducible
+
+---
 
 ## License
 
-[MIT License](./LICENSE)
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
