@@ -43,6 +43,12 @@ It is designed to help developers and DevOps engineers quickly experiment with a
    kubectl get pods,svc
    ```
 
+5. Delete application"
+
+   ```bash
+   kubectl delete -f .
+   ```
+
 ---
 
 ## Repository Structure
