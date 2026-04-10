@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-ts-sample
+  namespace: k8s-collections
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-ts-sample
+  template:
+    metadata:
+      labels:
+        app: express-ts-sample
+    spec:
+      containers:
+        - name: express-ts-sample
+          image: ghcr.io/marcuwynu23/express-typescript-sample:latest
+          ports:
+            - containerPort: 3000

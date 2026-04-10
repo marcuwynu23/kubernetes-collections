@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-ts-sample-svc
+  namespace: k8s-collections
+spec:
+  selector:
+    app: express-ts-sample
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30080
+  type: NodePort
