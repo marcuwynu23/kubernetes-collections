@@ -1,0 +1,22 @@
+---
+# ============================================================
+# PostgreSQL Service
+# ============================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: supabase-db
+  namespace: supabase
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: supabase-db
+
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
