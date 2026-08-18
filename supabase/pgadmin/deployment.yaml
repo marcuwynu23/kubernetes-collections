@@ -1,0 +1,70 @@
+---
+# ============================================================
+# pgAdmin Deployment
+# ============================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: supabase-ui
+  namespace: supabase
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: supabase-ui
+
+  template:
+    metadata:
+      labels:
+        app: supabase-ui
+
+    spec:
+      containers:
+      - name: pgadmin
+        image: dpage/pgadmin4:latest
+
+        ports:
+        - containerPort: 80
+
+        env:
+        - name: PGADMIN_DEFAULT_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secrets
+              key: pgadmin-email
+
+        - name: PGADMIN_DEFAULT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secrets
+              key: pgadmin-password
+
+        - name: PGADMIN_LISTEN_PORT
+          value: "80"
+
+        volumeMounts:
+        - name: pgadmin-data
+          mountPath: /var/lib/pgadmin
+
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+
+          initialDelaySeconds: 15
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+
+          initialDelaySeconds: 30
+          periodSeconds: 20
+
+      volumes:
+      - name: pgadmin-data
+        persistentVolumeClaim:
+          claimName: supabase-ui-data
