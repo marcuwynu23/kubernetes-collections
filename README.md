@@ -51,18 +51,13 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 ---
 
-## Repository Structure
+## Kubernetes Application List
 
-```
-.
-├── nginx/
-│   ├── deployment.yaml
-│   └── service.yaml
-├── httpd/
-│   ├── deployment.yaml
-│   └── service.yaml
-└── README.md
-```
+- [nginx](./nginx)
+- [httpd](./httpd/)
+- [vite-app-sample](./vite-app-sample)
+- [express-ts-sample](./express-ts-sample)
+- [supabase](./supabase)
 
 ---
 
