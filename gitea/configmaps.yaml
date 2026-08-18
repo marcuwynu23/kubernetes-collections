@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitea-config
+  namespace: gitea
+
+data:
+  USER_UID: "1000"
+  USER_GID: "1000"
