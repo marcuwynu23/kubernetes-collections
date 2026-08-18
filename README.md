@@ -75,6 +75,10 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 - [vault](./vault)
 
+### Package Repository
+
+- [devpi](./devpi)
+
 ---
 
 ## Contributing
