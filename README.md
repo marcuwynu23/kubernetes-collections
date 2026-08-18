@@ -53,11 +53,23 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 ## Kubernetes Application List
 
+### Web Servers
+
 - [nginx](./nginx)
 - [httpd](./httpd/)
+
+### Sample Application
+
 - [vite-app-sample](./vite-app-sample)
 - [express-ts-sample](./express-ts-sample)
+
+### Database
+
 - [supabase](./supabase)
+
+### Source Code Management
+
+- [gitea](./gitea)
 
 ---
 
