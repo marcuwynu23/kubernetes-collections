@@ -1,0 +1,17 @@
+---
+# ============================================================
+# PostgreSQL PersistentVolumeClaim
+# ============================================================
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: supabase-db-data
+  namespace: supabase
+spec:
+  accessModes:
+  - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: 10Gi
