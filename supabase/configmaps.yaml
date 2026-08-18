@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: supabase-config
+  namespace: supabase
+data:
+  postgres-port: "5432"
+  rest-port: "3000"
+  pgadmin-port: "80"
+
+  postgres-schemas: "public"
+  postgres-anon-role: "anon"
