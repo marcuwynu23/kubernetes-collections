@@ -34,7 +34,7 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 3. Apply the manifests:
 
    ```bash
-   kubectl apply -f .
+   kubectl apply -R -f .
    ```
 
 4. Verify resources:
@@ -46,7 +46,7 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 5. Delete application"
 
    ```bash
-   kubectl delete -f .
+   kubectl delete -R -f .
    ```
 
 ---
