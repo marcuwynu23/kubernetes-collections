@@ -71,6 +71,10 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 - [gitea](./gitea)
 
+### Secrets Management
+
+- [vault](./vault)
+
 ---
 
 ## Contributing
