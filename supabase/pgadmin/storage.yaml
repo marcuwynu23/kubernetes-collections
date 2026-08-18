@@ -1,0 +1,17 @@
+---
+# ============================================================
+# pgAdmin PersistentVolumeClaim
+# ============================================================
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: supabase-ui-data
+  namespace: supabase
+spec:
+  accessModes:
+  - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: 5Gi
