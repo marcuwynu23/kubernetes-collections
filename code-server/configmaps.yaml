@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: code-server-ns
+  name: code-server-config
+data:
+  TZ: Asia/Manila
+  PUID: "1000"
+  PGID: "1000"
+  PASSWORD: changeme
+  SUDO_PASSWORD: changeme
+  DEFAULT_WORKSPACE: /workspace
