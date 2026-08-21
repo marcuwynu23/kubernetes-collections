@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: code-server-ns
+  name: code-server-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: code-server-deployment
+  template:
+    metadata:
+      labels:
+        app: code-server-deployment
+    spec:
+      containers:
+      - name: code-server
+        image: scr.io/linuxserver/code-server:latest
+        ports:
+        - containerPort: 8449
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: code-server-config
+              key: TZ
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: code-server-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: code-server-config
+              key: PGID
+        - name: PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: code-server-config
+              key: PASSWORD
+        - name: SUDO_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: code-server-config
+              key: SUDO_PASSWORD
+        - name: DEFAULT_WORKSPACE
+          valueFrom:
+            configMapKeyRef:
+              name: code-server-config
+              key: DEFAULT_WORKSPACE
+        volumeMounts:
+        - name: code-server-storage
+          mountPath: "/config"
+
+      volumes:
+      - name: code-server-storage
+        persistentVolumeClaim:
+          claimName: code-server-storage-claim
