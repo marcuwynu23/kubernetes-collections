@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: draw-io-ns
+  name: draw-io-service
+spec:
+  selector:
+    app: draw-io-deployment
+  ports:
+  - name: "http"
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  - name: "https"
+    protocol: TCP
+    port: 8443
+    targetPort: 8443
