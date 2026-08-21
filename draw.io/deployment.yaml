@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: draw-io-ns
+  name: draw-io-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: draw-io-deployment
+  template:
+    metadata:
+      labels:
+        app: draw-io-deployment
+    spec:
+      containers:
+      - name: draw-io
+        image: jgraph/drawio
+        ports:
+        - containerPort: 8080
+        - containerPort: 8443
+        volumeMounts:
+        - name: draw-io-storage
+          mountPath: /data
+      volumes:
+      - name: draw-io-storage
+        persistentVolumeClaim:
+          claimName: draw-io-storage-claim
