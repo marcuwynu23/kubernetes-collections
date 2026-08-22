@@ -87,6 +87,10 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 - [code-server](./code-server)
 
+### AI Orchestration Tools
+
+- [n8n](./n8n)
+
 ---
 
 ## Contributing
