@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: n8n-ns
+  name: n8n-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: n8n-deployment
+  template:
+    metadata:
+      labels:
+        app: n8n-deployment
+    spec:
+      containers:
+      - name: n8n
+        image: docker.n8n.io/n8nio/n8n:latest
+        ports:
+        - containerPort: 5678
+        volumeMounts:
+        - name: n8n-pvc
+          mountPath: "/root/.n8n"
+        envFrom:
+        - configMapRef:
+            name: n8n-config
+
+      volumes:
+      - name: n8n-pvc
+        persistentVolumeClaim:
+          claimName: n8n-pvc
