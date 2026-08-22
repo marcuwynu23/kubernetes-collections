@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: n8n-ns
+  name: n8n-config
+
+data:
+  # Timezone
+  TZ: "Asia/Manila"
+
+  # SQLite DB
+  DB_SQLITE_POOL_SIZE: "5"
+
+  # Workflow settings
+  N8N_RUNNERS_ENABLED: "true"
+  N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+  N8N_GIT_NODE_DISABLE_BARE_REPOS: "true"
+  N8N_COMMUNITY_NODES_ENABLED: "false"
+  N8N_DIAGNOSTICS_ENABLED: "false"
+  N8N_TELEMETRY_ENABLED: "false"
+  N8N_DEFAULT_TIMEOUT: "120000"
+
+  # URLs & hostname
+  N8N_HOST: "n8n.marcuwynu.space"
+  N8N_PROTOCOL: "https"
+  N8N_WEBHOOK_URL: "https://n8n.marcuwynu.space"
+  N8N_EDITOR_BASE_URL: "https://n8n.marcuwynu.space"
+  N8N_WEBHOOK_TUNNEL_URL: "https://n8n.marcuwynu.space"
+  WEBHOOK_URL: "https://n8n.marcuwynu.space"
+
+  # API & proxy
+  N8N_PUBLIC_API_DISABLED: "false"
+  N8N_TRUST_PROXY: "true"
+  N8N_TRUSTED_PROXIES: "127.0.0.1,::1"
+  N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+
+  # User management
+  N8N_USER_MANAGEMENT_DISABLED: "false"
+  N8N_BASIC_AUTH_ACTIVE: "false"
+  N8N_SECURE_COOKIE: "false"
