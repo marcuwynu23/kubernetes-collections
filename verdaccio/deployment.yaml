@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: verdaccio-ns
+  name: verdaccio-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: verdaccio
+  template:
+    metadata:
+      labels:
+        app: verdaccio
+    spec:
+      containers:
+      - name: verdaccio
+        image: verdaccio/verdaccio:latest
+        ports:
+        - name: http
+          containerPort: 4873
+        volumeMounts:
+        - name: verdaccio-storage
+          mountPath: "/verdaccio/storage"
+      volumes:
+      - name: verdaccio-storage
+        persistentVolumeClaim:
+          claimName: verdaccio-storage-claim
