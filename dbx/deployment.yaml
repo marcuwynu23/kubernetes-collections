@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dbx-ns
+  name: dbx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dbx
+  template:
+    metadata:
+      labels:
+        app: dbx
+    spec:
+      containers:
+      - name: dbx
+        image: t8y2/dbx
+        ports:
+        - name: http
+          containerPort: 4224
+        volumeMounts:
+        - name: dbx-storage
+          mountPath: "/app/data"
+      volumes:
+      - name: dbx-storage
+        persistentVolumeClaim:
+          claimName: dbx-storage-claim
