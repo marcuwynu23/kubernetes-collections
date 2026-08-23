@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: pihole-ns
+  name: pihole-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      hostname: pihole
+      containers:
+      - name: pihole
+        image: pihole/pihole:latest
+        ports:
+        - name: dns
+          containerPort: 53
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        envFrom:
+        - configMapRef:
+            name: pihole-config
+        volumeMounts:
+        - name: pihole-storage
+          mountPath: "/data"
+      volumes:
+      - name: pihole-storage
+        persistentVolumeClaim:
+          claimName: pihole-storage
