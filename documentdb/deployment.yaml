@@ -17,7 +17,7 @@ spec:
       - name: documentdb
         image: ghcr.io/documentdb/documentdb/documentdb-local:latest
         ports:
-        - name: http
+        - name: documentdb
           containerPort: 10260
         envFrom:
         - configMapRef:
