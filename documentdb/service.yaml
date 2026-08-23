@@ -7,7 +7,7 @@ spec:
   selector:
     app: documentdb
   ports:
-  - name: http
+  - name: documentdb
     protocol: TCP
     port: 10260
     targetPort: 10260
