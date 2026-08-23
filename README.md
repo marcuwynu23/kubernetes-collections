@@ -91,6 +91,10 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 - [n8n](./n8n)
 
+### Infrastructure & Security
+
+- [pihole](./pihole)
+
 ---
 
 ## Contributing
