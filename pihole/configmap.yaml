@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: pihole-ns
+  name: pihole-config
+data:
+  TZ: Asia/Manila
+  WEBPASSWORD: Password123
+  DNS1: 1.1.1.1
+  DNS2: 8.8.8.8
