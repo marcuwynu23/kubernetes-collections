@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: documentdb-ns
+  name: documentdb-config
+data:
+  DOCUMENTDB_USERNAME: admin
+  DOCUMENTDB_PASSWORD: admin
+  
