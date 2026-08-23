@@ -63,9 +63,10 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 - [vite-app-sample](./vite-app-sample)
 - [express-ts-sample](./express-ts-sample)
 
-### Database
+### Database & Database Management
 
 - [supabase](./supabase)
+- [dbx](./dbx)
 
 ### Source Code Management
 
