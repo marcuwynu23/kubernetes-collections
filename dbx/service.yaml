@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: dbx-ns
+  name: dbx-service
+spec:
+  selector:
+    app: dbx
+  ports:
+  - name: http
+    protocol: TCP
+    port: 4224
+    targetPort: 4224
