@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: documentdb-ns
+  name: documentdb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: documentdb
+  template:
+    metadata:
+      labels:
+        app: documentdb
+    spec:
+      containers:
+      - name: documentdb
+        image: ghcr.io/documentdb/documentdb/documentdb-local:latest
+        ports:
+        - name: http
+          containerPort: 10260
+        envFrom:
+        - configMapRef:
+            name: documentdb-config
+        args:
+        - "--username"
+        - "$(DOCUMENTDB_USERNAME)"
+        - "--password"
+        - "$(DOCUMENTDB_PASSWORD)"
