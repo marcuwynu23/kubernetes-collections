@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: filebrowser-ns
+  name: filebrowser-service
+spec:
+  selector:
+    app: filebrowser
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 80
