@@ -53,10 +53,11 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 ## Kubernetes Application List
 
-### Web Servers
+### Web Servers,Load Balancers & Reverse Proxies
 
 - [nginx](./nginx)
 - [httpd](./httpd/)
+- [haproxy](./haproxy)
 
 ### Sample Application
 
