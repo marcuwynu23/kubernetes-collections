@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: filebrowser-ns
+  name: filebrowser-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filebrowser
+  template:
+    metadata:
+      labels:
+        app: filebrowser
+    spec:
+      containers:
+      - name: filebrowser
+        image: filebrowser/filebrowser:latest
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: filebrowser-data-storage
+          mountPath: "/srv"
+        - name: filebrowser-datadabase-storage
+          mountPath: "/database"
+      volumes:
+      - name: filebrowser-data-storage
+        persistentVolumeClaim:
+          claimName: filebrowser-data-pvc
+      - name: filebrowser-datadabase-storage
+        persistentVolumeClaim:
+          claimName: filebrowser-database-pvc
