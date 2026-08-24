@@ -102,6 +102,10 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 - [pihole](./pihole)
 
+### Other Services
+
+- [filebrowser](./filebrowser)
+
 ---
 
 ## Contributing
