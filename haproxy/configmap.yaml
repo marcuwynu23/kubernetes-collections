@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  haproxy.cfg: "global\r\n    log stdout format raw local0\r\n\r\ndefaults\r\n    log
+    \    global\r\n    mode    http\r\n    option  httplog\r\n    timeout connect
+    5s\r\n    timeout client  30s\r\n    timeout server  30s\r\n\r\nfrontend http_front\r\n
+    \   bind *:80\r\n    default_backend http_back\r\n\r\nbackend http_back\r\n    balance
+    roundrobin\r\n    server app1 host.docker.internal:8080 check\r\n\r\nlisten stats\r\n
+    \   bind *:8404\r\n    stats enable\r\n    stats uri /stats\r\n    stats refresh
+    10s\r\n\r\n\r\n"
+kind: ConfigMap
+metadata:
+  name: haproxy-config
+  namespace: haproxy-ns
