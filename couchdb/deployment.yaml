@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: couchdb-ns
+  name: couchdb-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: couchdb
+  template:
+    metadata:
+      labels:
+        app: couchdb
+    spec:
+      containers:
+      - name: couchdb
+        image: couchdb:latest
+        ports:
+        - name: "couchdb-port"
+          containerPort: 5984
+        envFrom:
+        - configMapRef:
+            name: couchdb-config
+        volumeMounts:
+        - name: couchdb-storage
+          mountPath: /opt/couchdb/data
+      volumes:
+      - name: couchdb-storage
+        persistentVolumeClaim:
+          claimName: couchdb-storage-claim
