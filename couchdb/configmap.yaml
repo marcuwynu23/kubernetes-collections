@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: couchdb-ns
+  name: couchdb-config
+data:
+  COUCHDB_USER: admin
+  COUCHDB_PASSWORD: password
