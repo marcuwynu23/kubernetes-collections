@@ -13,7 +13,6 @@ spec:
       containers:
       - name: kong
         image: kong:3.7
-        entrypoint: null
         command: ["kong", "migrations", "bootstrap"]
         envFrom:
         - configMapRef:
