@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kong-ns
+  name: kong-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kong
+  template:
+    metadata:
+      labels:
+        app: kong
+    spec:
+      containers:
+      - name: kong
+        image: kong:3.7
+        ports:
+        - name: http
+          containerPort: 8000
+        - name: https
+          containerPort: 8443
+        - name: http-admin
+          containerPort: 8001
+        envFrom:
+        - configMapRef:
+            name: kong-config
+        - secretRef:
+            name: kong-secret
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: http-admin
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /status
+            port: http-admin
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
