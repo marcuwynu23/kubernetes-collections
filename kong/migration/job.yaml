@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: kong-ns
+  name: kong-migr
+spec:
+  template:
+    metadata:
+      labels:
+        app: kong-migr
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: kong
+        image: kong:3.7
+        entrypoint: null
+        command: ["kong", "migrations", "bootstrap"]
+        envFrom:
+        - configMapRef:
+            name: kong-migr-config
+        - secretRef:
+            name: kong-secret
