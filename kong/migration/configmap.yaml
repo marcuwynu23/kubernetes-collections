@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: kong-ns
+  name: kong-migr-config
+data:
+  KONG_DATABASE: postgres
+  KONG_PG_HOST: kong-database
+  KONG_PG_USER: kong
+  KONG_PG_DATABASE: kong
