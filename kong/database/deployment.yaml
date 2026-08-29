@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kong-ns
+  name: kong-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kong-db
+  template:
+    metadata:
+      labels:
+        app: kong-db
+    spec:
+      containers:
+      - name: kong-db
+        image: postgres:16-alpine
+
+        ports:
+        - name: postgres
+          containerPort: 5432
+
+        volumeMounts:
+        - name: kong-storage
+          mountPath: /var/lib/postgresql/data
+
+        envFrom:
+        - configMapRef:
+            name: kong-db-config
+        - secretRef:
+            name: kong-db-secret
+
+        startupProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - "$(POSTGRES_USER)"
+            - -d
+            - "$(POSTGRES_DB)"
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 30
+
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - "$(POSTGRES_USER)"
+            - -d
+            - "$(POSTGRES_DB)"
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - "$(POSTGRES_USER)"
+            - -d
+            - "$(POSTGRES_DB)"
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+
+      volumes:
+      - name: kong-storage
+        persistentVolumeClaim:
+          claimName: kong-storage-claim
