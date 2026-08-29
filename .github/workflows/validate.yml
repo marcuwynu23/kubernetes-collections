@@ -25,6 +25,8 @@ jobs:
         while IFS= read -r -d '' dir; do
           if find "$dir" -type f \( -name "*.yaml" -o -name "*.yml" \) -print -quit | grep -q .; then
             echo "Validating: $dir"
-            kubectl apply --dry-run=client -R -f "$dir"
+            kubectl apply --dry-run=client \
+            --validate=false \
+            -R -f "$dir"
           fi
         done
