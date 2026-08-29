@@ -1,59 +1,29 @@
-# Kubernetes Application Collections
+<div align="center">
 
-A curated collection of Kubernetes application manifests and examples for learning, testing, and deployment.
+ <img src="./banner.svg" alt="Kubernetes Collections" style="width: 100%; max-width: 1200px;" />
 
----
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+<img src="https://img.shields.io/badge/stacks-kubernetes-informational" alt="Kubernetes Stacks">
+<img src="https://img.shields.io/badge/runtime-Kubernetes-0db7ed" alt="Runtime: Kubernetes">
+
+  <p><strong> A curated collection of Kubernetes application manifests and examples for learning, testing, and deployment.</strong></p>
+</div>
 
 ## Overview
 
-This repository contains reusable Kubernetes configurations such as:
+This repository is a practical collection of Kubernetes manifests for common infrastructure and developer tooling. Each folder contains reusable configuration you can apply quickly and customize for your environment.
 
-- Deployments
-- Services
-- Ingress resources
-- Sample applications (e.g., NGINX, Apache HTTPD)
+## What You Will Find
 
-It is designed to help developers and DevOps engineers quickly experiment with and understand Kubernetes workloads.
+- Pre-configured Kubernetes manifests for common services and tooling
+- Deployment, Service, ConfigMap, and PVC examples
+- Stack examples with persistent storage and environment variables
+- Configurations that are easy to adapt for learning and testing
+- Namespace isolation for each application
 
----
+## Available Stacks
 
-## Getting Started
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/marcuwynu23/k8s-collections
-   ```
-
-2. Navigate to a specific application folder:
-
-   ```bash
-   cd httpd
-   ```
-
-3. Apply the manifests:
-
-   ```bash
-   kubectl apply -R -f .
-   ```
-
-4. Verify resources:
-
-   ```bash
-   kubectl get pods,svc
-   ```
-
-5. Delete application"
-
-   ```bash
-   kubectl delete -R -f .
-   ```
-
----
-
-## Kubernetes Application List
-
-### Web Servers,Load Balancers & Reverse Proxies
+### Web Servers, Load Balancers & Reverse Proxies
 
 - [nginx](./nginx)
 - [httpd](./httpd/)
@@ -107,7 +77,48 @@ It is designed to help developers and DevOps engineers quickly experiment with a
 
 - [filebrowser](./filebrowser)
 
----
+## Quick Start
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/marcuwynu23/k8s-collections
+   ```
+
+2. Navigate to a specific application folder:
+
+   ```bash
+   cd code-server
+   ```
+
+3. Apply the manifests:
+
+   ```bash
+   kubectl apply -f .
+   ```
+
+4. Verify resources:
+
+   ```bash
+   kubectl get pods,svc -n code-server-ns
+   ```
+
+5. Delete application:
+
+   ```bash
+   kubectl delete -f .
+   ```
+
+## Podman Support
+
+Most stacks can also run with Podman:
+
+```bash
+# Apply manifests with Podman
+kubectl apply -f .
+```
+
+Note: Some configurations may require additional Podman-Kubernetes setup.
 
 ## Contributing
 
@@ -123,8 +134,6 @@ Please ensure:
 - YAML files are valid and well-formatted
 - Resources are properly labeled
 - Examples are simple and reproducible
-
----
 
 ## License
 
