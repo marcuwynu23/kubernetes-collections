@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: kong-ns
+  name: kong-config
+data:
+  KONG_DATABASE: postgres
+  KONG_PG_HOST: kong-database
+  KONG_PG_USER: kong
+
+  KONG_PG_DATABASE: kong
+  KONG_PROXY_ACCESS_LOG: /dev/stdout
+  KONG_ADMIN_ACCESS_LOG: /dev/stdout
+  KONG_PROXY_ERROR_LOG: /dev/stderr
+  KONG_ADMIN_ERROR_LOG: /dev/stderr
+  KONG_ADMIN_LISTEN: 0.0.0.0:8001
