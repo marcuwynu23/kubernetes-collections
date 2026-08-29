@@ -14,7 +14,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Validate Kubernetes manifests
+    - name: Install Kubeconform
+      uses: yokawasa/action-setup-kubeconform@v1
+      with:
+        version: "0.6.7"
+
+    - name: Install KubeLinter
+      uses: stackrox/kube-linter-action@v1
+      with:
+        directory: .
+
+    - name: Validate Kubernetes schemas
       shell: bash
       run: |
         set -e
@@ -25,8 +35,10 @@ jobs:
         while IFS= read -r -d '' dir; do
           if find "$dir" -type f \( -name "*.yaml" -o -name "*.yml" \) -print -quit | grep -q .; then
             echo "Validating: $dir"
-            kubectl apply --dry-run=client \
-            --validate=false \
-            -R -f "$dir"
+            kubeconform \
+              -strict \
+              -summary \
+              -recursive \
+              "$dir"
           fi
         done
