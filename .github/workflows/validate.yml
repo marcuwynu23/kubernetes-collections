@@ -23,19 +23,9 @@ jobs:
         sudo mv kubeconform /usr/local/bin/kubeconform
 
     - name: Validate Kubernetes manifests
-      shell: bash
       run: |
-        set -e
-
-        for dir in */; do
-          [ "$dir" = ".github/" ] && continue
-
-          if find "$dir" -type f \( -name "*.yaml" -o -name "*.yml" \) -print -quit | grep -q .; then
-            echo "Validating: $dir"
-
-            kubeconform \
-              -strict \
-              -summary \
-              "$dir"
-          fi
-        done
+        kubeconform \
+          -strict \
+          -summary \
+          -ignore-filename-pattern '\.github' \
+          .
