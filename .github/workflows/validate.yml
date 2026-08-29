@@ -15,26 +15,24 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install Kubeconform
-      uses: yokawasa/action-setup-kubeconform@v1
-      with:
-        version: "0.6.7"
+      run: |
+        curl -L -o kubeconform.tar.gz \
+          https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
 
-    - name: Install KubeLinter
-      uses: stackrox/kube-linter-action@v1
-      with:
-        directory: .
+        tar -xzf kubeconform.tar.gz
+        sudo mv kubeconform /usr/local/bin/kubeconform
 
-    - name: Validate Kubernetes schemas
+    - name: Validate Kubernetes manifests
       shell: bash
       run: |
         set -e
 
-        find . -mindepth 1 -maxdepth 1 -type d \
-          ! -name ".github" \
-          -print0 |
-        while IFS= read -r -d '' dir; do
+        for dir in */; do
+          [ "$dir" = ".github/" ] && continue
+
           if find "$dir" -type f \( -name "*.yaml" -o -name "*.yml" \) -print -quit | grep -q .; then
             echo "Validating: $dir"
+
             kubeconform \
               -strict \
               -summary \
