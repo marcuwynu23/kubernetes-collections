@@ -36,7 +36,6 @@ jobs:
             kubeconform \
               -strict \
               -summary \
-              -recursive \
               "$dir"
           fi
         done
