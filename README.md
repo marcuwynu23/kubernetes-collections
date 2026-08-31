@@ -73,6 +73,10 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 - [pihole](./pihole)
 
+### DevOps
+
+- [fluent-bit](./fluent-bit)
+
 ### Other Services
 
 - [filebrowser](./filebrowser)
