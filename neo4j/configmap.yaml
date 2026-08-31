@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: neo4j-ns
+  name: neo4j-config
+data:
+  NEO4J_AUTH: neo4j/password
+  NEO4J_PLUGINS: '[ "apoc" ]'
+  NEO4J_dbms_memory_pagecache_size: 512M
+  NEO4J_dbms_memory_heap_initial__size: 512M
+  NEO4J_dbms_memory_heap_max__size: 1G
