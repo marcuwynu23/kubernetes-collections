@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: neo4j-ns
+  name: neo4j-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: neo4j
+  template:
+    metadata:
+      labels:
+        app: neo4j
+    spec:
+      containers:
+      - name: neo4j
+        image: neo4j:latest
+        ports:
+        - name: neo4j-port-1
+          containerPort: 4747
+        - name: neo4j-port-2
+          containerPort: 7687
+        envFrom:
+        - configMapRef:
+            name: neo4j-config
+        volumeMounts:
+        - name: neo4j-data
+          mountPath: /data
+        - name: neo4j-logs
+          mountPath: /logs
+        - name: neo4j-import
+          mountPath: /import
+        - name: neo4j-plugins
+          mountPath: /plugins
+        - name: neo4j-conf
+          mountPath: /conf
+      volumes:
+      - name: neo4j-data
+        persistentVolumeClaim:
+          claimName: neo4j-data-storage-claim
+      - name: neo4j-logs
+        persistentVolumeClaim:
+          claimName: neo4j-logs-storage-claim
+      - name: neo4j-import
+        persistentVolumeClaim:
+          claimName: neo4j-import-storage-claim
+      - name: neo4j-plugins
+        persistentVolumeClaim:
+          claimName: neo4j-plugins-storage-claim
+      - name: neo4j-conf
+        persistentVolumeClaim:
+          claimName: neo4j-conf-storage-claim
