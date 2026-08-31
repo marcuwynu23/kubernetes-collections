@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  fluent-bit.conf: "[SERVICE]\r\n    Flush        1\r\n    Log_Level    info\r\n    Parsers_File
+    parsers.conf\r\n\r\n    HTTP_Server  On\r\n    HTTP_Listen  0.0.0.0\r\n    HTTP_PORT
+    \   2020\r\n[INPUT]\r\n    Name         tail\r\n    Path         /var/log/app/*.log\r\n
+    \   Tag          app.*\r\n    Read_from_Head true\r\n\r\n[OUTPUT]\r\n    Name
+    \        stdout\r\n    Match        *\r\n    Format       json_lines"
+  parsers.conf: "[PARSER]\r\n    Name        json\r\n    Format      json\r\n    Time_Key
+    \   time\r\n    Time_Format %Y-%m-%dT%H:%M:%S.%L\r\n    Time_Keep   On"
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: fluent-bit-ns
