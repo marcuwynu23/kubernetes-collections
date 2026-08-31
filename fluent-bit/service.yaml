@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: fluent-bit-ns
+  name: fluent-bit-service
+spec:
+  selector:
+    app: fluent-bit
+  ports:
+  - name: fluent-bit-port
+    protocol: TCP
+    port: 2020
+    targetPort: 2020
