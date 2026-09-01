@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  namespace: automq-ns
+  name: automq-storage-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
