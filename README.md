@@ -72,6 +72,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### Infrastructure & Security
 
 - [pihole](./pihole)
+- [keycloak](./keycloak)
 
 ### DevOps
 
