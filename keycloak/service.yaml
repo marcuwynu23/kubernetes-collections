@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: keycloak-ns
+  name: keycloak-service
+spec:
+  selector:
+    app: keycloak
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: keycloak-ns
+  name: keycloak-db-service
+spec:
+  selector:
+    app: keycloak-db
+  ports:
+  - name: postgresql-port
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
