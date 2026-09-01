@@ -69,6 +69,10 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 - [n8n](./n8n)
 
+### Message Brokers & Queuing
+
+- [rabbitmq](./rabbitmq/)
+
 ### Infrastructure & Security
 
 - [pihole](./pihole)
