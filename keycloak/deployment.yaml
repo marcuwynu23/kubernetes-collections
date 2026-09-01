@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: keycloak-ns
+  name: keycloak-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:25.0
+        ports:
+        - name: http
+          containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: keycloak-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: keycloak-ns
+  name: keycloak-db-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: keycloak-db
+  template:
+    metadata:
+      labels:
+        app: keycloak-db
+    spec:
+      containers:
+      - name: keycloak-db
+        image: postgres:16-alpine
+        ports:
+        - name: postgresql-port
+          containerPort: 5432
+        envFrom:
+        - configMapRef:
+            name: keycloak-db-config
+        volumeMounts:
+        - name: keycloak-db-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: keycloak-db-storage
+        persistentVolumeClaim:
+          claimName: keycloak-db-storage-claim
