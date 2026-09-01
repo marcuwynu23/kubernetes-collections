@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: rabbitmq-ns
+  name: rabbitmq-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management
+        ports:
+        - name: rabbitmq-mgmt-port
+          containerPort: 15672
+        - name: rabbitmq-port
+          containerPort: 5672
+        envFrom:
+        - configMapRef:
+            name: rabbitmq-config
+            
