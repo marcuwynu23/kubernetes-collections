@@ -71,7 +71,8 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 ### Message Brokers & Queuing
 
-- [rabbitmq](./rabbitmq/)
+- [rabbitmq](./rabbitmq)
+- [automq](./automq)
 
 ### Infrastructure & Security
 
