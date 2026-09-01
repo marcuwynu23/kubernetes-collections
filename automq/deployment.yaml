@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: automq-ns
+  name: automq-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: automq
+  template:
+    metadata:
+      labels:
+        app: automq
+    spec:
+      containers:
+      - name: automq
+        image: automqinc/automq-for-kafka:latest
+        ports:
+        - name: automq-port
+          containerPort: 9092
+        - name: automq-mgmt-port
+          containerPort: 8080
+        volumeMounts:
+        - name: automq-storage
+          mountPath: /automq/data
+      volumes:
+      - name: automq-storage
+        persistentVolumeClaim:
+          claimName: automq-storage-claim
