@@ -76,6 +76,10 @@ This repository is a practical collection of Kubernetes manifests for common inf
 - [rabbitmq](./rabbitmq)
 - [automq](./automq)
 
+### Alerts & Notifications
+
+- [apprise](./apprise)
+
 ### Infrastructure & Security
 
 - [pihole](./pihole)
