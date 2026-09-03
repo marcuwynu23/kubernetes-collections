@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: nessus-ns
+  name: nessus-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nessus
+  template:
+    metadata:
+      labels:
+        app: nessus
+    spec:
+      containers:
+      - name: nessus
+        image: tenable/nessus:10.7.0-ubuntu
+        ports:
+        - name: nessus-port
+          containerPort: 8834
+        volumeMounts:
+        - name: nessus-storage
+          mountPath: /opt/nessus
+      volumes:
+      - name: nessus-storage
+        persistentVolumeClaim:
+          claimName: nessus-storage-claim
