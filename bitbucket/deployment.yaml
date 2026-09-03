@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bitbucket-ns
+  name: bitbucket-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bitbucket
+  template:
+    metadata:
+      labels:
+        app: bitbucket
+    spec:
+      containers:
+      - name: bitbucket
+        image: atlassian/bitbucket:10.2.2
+        ports:
+        - name: bbport
+          containerPort: 7990
+        - name: bbport2
+          containerPort: 7999
+        envFrom:
+        - configMapRef:
+            name: bitbucket-config
+        volumeMounts:
+        - name: bitbucket-storage
+          mountPath: /var/atlassian/application-data/bitbucket
+      volumes:
+      - name: bitbucket-storage
+        persistentVolumeClaim:
+          claimName: bitbucket-storage-claim
