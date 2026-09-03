@@ -40,6 +40,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 ### Database & Database Management
 
+- [adminer](./adminer)
 - [supabase](./supabase)
 - [dbx](./dbx)
 - [documentdb](./documentdb)
