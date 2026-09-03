@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: apprise-ns
+  name: apprise-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: apprise
+  template:
+    metadata:
+      labels:
+        app: apprise
+    spec:
+      containers:
+      - name: apprise
+        image: caronc/apprise:latest
+        ports:
+        - name: apprise-port
+          containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: apprise-env-config
+        volumeMounts:
+        - name: apprise-config-file
+          mountPath: /config/apprise.yml
+          subPath: apprise.yml
+      volumes:
+      - name: apprise-config-file
+        configMap:
+          name: apprise-config-file
