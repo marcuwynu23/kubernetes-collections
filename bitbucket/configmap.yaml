@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: bitbucket-ns
+  name: bitbucket-config
+data:
+  JVM_MINIMUM_MEMORY: 1g
+  JVM_MAXIMUM_MEMORY: 2g
+  CATALINA_OPTS: "-XX:MaxRAMPercentage=75.0"
