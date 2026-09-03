@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: apprise-ns
+  name: apprise-config-file
+data:
+  apprise.yml: "urls:\r - tgram://123456789:AAHjExampleBotTokenABCxyz/987654321\r\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: apprise-ns
+  name: apprise-env-config
+data:
+  APPRISE_STATEFUL_MODE: simple
