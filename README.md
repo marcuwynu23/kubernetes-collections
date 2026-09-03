@@ -48,6 +48,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### Source Code Management
 
 - [gitea](./gitea)
+- [bitbucket](./bitbucket)
 
 ### Secrets Management
 
