@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: adminer-ns
+  name: adminer-service
+spec:
+  selector:
+    app: adminer
+  ports:
+  - name: adminer-port
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
