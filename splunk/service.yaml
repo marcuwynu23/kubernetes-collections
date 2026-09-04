@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: splunk-ns
+  name: splunk-service
+spec:
+  selector:
+    app: splunk
+  ports:
+  - name: "8000"
+    port: 8000
+    targetPort: 8000
+  - name: "8088"
+    port: 8088
+    targetPort: 8088
