@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: gitlab-ns
+  name: gitlab-config
+data:
+  GITLAB_OMNIBUS_CONFIG: |
+    external_url 'http://0.0.0.0'
+    gitlab_rails['gitlab_shell_ssh_port'] = 2222
