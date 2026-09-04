@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: splunk-ns
+  name: splunk-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: splunk
+  template:
+    metadata:
+      labels:
+        app: splunk
+    spec:
+      containers:
+      - name: splunk
+        image: splunk/splunk:latest
+        ports:
+        - name: "8000"
+          containerPort: 8000
+        - name: "8088"
+          containerPort: 8088
+        envFrom:
+        - configMapRef:
+            name: splunk-config
