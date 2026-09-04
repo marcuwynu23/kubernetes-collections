@@ -50,6 +50,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 - [gitea](./gitea)
 - [bitbucket](./bitbucket)
+- [gitlab](./gitlab)
 
 ### Secrets Management
 
