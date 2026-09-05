@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: listmonk-ns
+  name: listmonk-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: listmonk
+  template:
+    metadata:
+      labels:
+        app: listmonk
+    spec:
+      containers:
+      - name: listmonk
+        image: listmonk/listmonk:nightly
+        args:
+        - sh
+        - -c
+        - ./listmonk --install --idempotent --yes --config /listmonk/config.toml && ./listmonk --upgrade --yes --config /listmonk/config.toml && ./listmonk --config /listmonk/config.toml
+        ports:
+        - name: http
+          containerPort: 9000
+        volumeMounts:
+        - name: listmonk-config
+          mountPath: /listmonk/config.toml
+          subPath: config.toml
+        readinessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: listmonk-config
+        secret:
+          secretName: listmonk-secrets
+          items:
+          - key: config.toml
+            path: config.toml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: listmonk-ns
+  name: listmonk-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: listmonk-db
+  template:
+    metadata:
+      labels:
+        app: listmonk-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: listmonk-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: listmonk-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: listmonk-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: listmonk-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: listmonk-db-storage
+        persistentVolumeClaim:
+          claimName: listmonk-db-storage-claim
