@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: postiz-ns
+  name: postiz-config
+data:
+  MAIN_URL: http://localhost:4007
+  FRONTEND_URL: http://localhost:4007
+  NEXT_PUBLIC_BACKEND_URL: http://localhost:4007/api
+  REDIS_URL: redis://postiz-redis-service:6379
+  BACKEND_INTERNAL_URL: http://localhost:3000
+  TEMPORAL_ADDRESS: postiz-temporal-service:7233
+  IS_GENERAL: "true"
+  DISABLE_REGISTRATION: "false"
+  RUN_CRON: "true"
+  STORAGE_PROVIDER: local
+  UPLOAD_DIRECTORY: /uploads
+  NEXT_PUBLIC_UPLOAD_DIRECTORY: /uploads
+  LINKEDIN_CLIENT_ID: ""
+  REDDIT_CLIENT_ID: ""
+  GITHUB_CLIENT_ID: ""
+  BEEHIIVE_PUBLICATION_ID: ""
+  THREADS_APP_ID: ""
+  FACEBOOK_APP_ID: ""
+  YOUTUBE_CLIENT_ID: ""
+  TIKTOK_CLIENT_ID: ""
+  PINTEREST_CLIENT_ID: ""
+  DRIBBBLE_CLIENT_ID: ""
+  DISCORD_CLIENT_ID: ""
+  SLACK_ID: ""
+  MASTODON_URL: https://mastodon.social
+  MASTODON_CLIENT_ID: ""
+  EXTENSION_ID: icpokdlcikdmemjkeoojhocmhmehpaia
+  OPENAI_API_KEY: ""
+  NEXT_PUBLIC_DISCORD_SUPPORT: ""
+  NEXT_PUBLIC_POLOTNO: ""
+  API_LIMIT: "30"
+  FEE_AMOUNT: "0.05"
+  STRIPE_PUBLISHABLE_KEY: ""
+  NX_ADD_PLUGINS: "false"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: postiz-ns
+  name: postiz-db-config
+data:
+  POSTGRES_USER: postiz-user
+  POSTGRES_DB: postiz-db-local
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: postiz-ns
+  name: postiz-temporal-config
+data:
+  DB: postgres12
+  DB_PORT: "5432"
+  POSTGRES_SEEDS: postiz-temporal-db-service
+  DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+  ENABLE_ES: "true"
+  ES_SEEDS: postiz-temporal-es-service
+  ES_VERSION: v7
+  TEMPORAL_NAMESPACE: default
+  cluster.routing.allocation.disk.threshold_enabled: "true"
+  cluster.routing.allocation.disk.watermark.low: 512mb
+  cluster.routing.allocation.disk.watermark.high: 256mb
+  cluster.routing.allocation.disk.watermark.flood_stage: 128mb
+  discovery.type: single-node
+  ES_JAVA_OPTS: -Xms256m -Xmx256m
+  xpack.security.enabled: "false"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: postiz-ns
+  name: postiz-temporal-dynamicconfig
+data:
+  development-sql.yaml: |
+    system.worker.persistenceMaxQPS:
+      - value: 1000
+    system.worker.visibilityPersistenceMaxQPS:
+      - value: 1000
+    frontend.workerPersistenceMaxQPS:
+      - value: 1000
+    frontend.workerVisibilityPersistenceMaxQPS:
+      - value: 1000
+    history.workerPersistenceMaxQPS:
+      - value: 1000
+    history.workerVisibilityPersistenceMaxQPS:
+      - value: 1000
+    system.advancedVisibilityPersistenceMaxQPS:
+      - value: 1000
+    system.workerReplicatedTaskMaxQPS:
+      - value: 100
+    system.workerReplicatedTaskForceSyncIterations:
+      - value: 10
