@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: mattermost-ns
+  name: mattermost-config
+data:
+  MM_SQLSETTINGS_DRIVERNAME: postgres
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: mattermost-ns
+  name: mattermost-db-config
+data:
+  POSTGRES_USER: mattermost
+  POSTGRES_DB: mattermost
