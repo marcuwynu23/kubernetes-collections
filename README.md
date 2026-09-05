@@ -62,6 +62,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### Package Repository
 
 - [devpi](./devpi)
+- [registry](./registry)
 
 ### Visual Management
 
