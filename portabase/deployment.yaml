@@ -1,0 +1,315 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: portabase-ns
+  name: portabase-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portabase
+  template:
+    metadata:
+      labels:
+        app: portabase
+    spec:
+      containers:
+      - name: application
+        image: portabase/portabase:latest
+        ports:
+        - name: http
+          containerPort: 80
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: TZ
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: NODE_ENV
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: LOG_LEVEL
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: database-url
+        - name: PROJECT_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: PROJECT_NAME
+        - name: PROJECT_URL
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: PROJECT_URL
+        - name: PROJECT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: project-secret
+        - name: SMTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: SMTP_HOST
+        - name: SMTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: SMTP_PORT
+        - name: SMTP_USER
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: SMTP_USER
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: smtp-password
+        - name: SMTP_FROM
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: SMTP_FROM
+        - name: AUTH_OIDC_ID
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_ID
+        - name: AUTH_OIDC_TITLE
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_TITLE
+        - name: AUTH_OIDC_DESC
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_DESC
+        - name: AUTH_OIDC_ICON
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_ICON
+        - name: AUTH_OIDC_CLIENT
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_CLIENT
+        - name: AUTH_OIDC_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: auth-oidc-secret
+        - name: AUTH_OIDC_ISSUER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_ISSUER_URL
+        - name: AUTH_OIDC_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_HOST
+        - name: AUTH_OIDC_SCOPES
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_SCOPES
+        - name: AUTH_OIDC_DISCOVERY_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_DISCOVERY_ENDPOINT
+        - name: AUTH_OIDC_JWKS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_JWKS_ENDPOINT
+        - name: AUTH_OIDC_PKCE
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_PKCE
+        - name: ALLOWED_GROUP
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: ALLOWED_GROUP
+        - name: AUTH_OIDC_ROLE_MAP
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_OIDC_ROLE_MAP
+        - name: AUTH_ALLOW_LINKING
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_ALLOW_LINKING
+        - name: AUTH_ALLOW_UNLINKING
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_ALLOW_UNLINKING
+        - name: AUTH_SOCIAL_ID
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SOCIAL_ID
+        - name: AUTH_SOCIAL_TITLE
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SOCIAL_TITLE
+        - name: AUTH_SOCIAL_DESC
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SOCIAL_DESC
+        - name: AUTH_SOCIAL_ICON
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SOCIAL_ICON
+        - name: AUTH_SOCIAL_CLIENT
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SOCIAL_CLIENT
+        - name: AUTH_SOCIAL_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: auth-social-secret
+        - name: AUTH_SOCIAL_APPLE_APP_BUNDLE_IDENTIFIER
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SOCIAL_APPLE_APP_BUNDLE_IDENTIFIER
+        - name: AUTH_SYNC_OIDC_ROLES_ON_LOGIN
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SYNC_OIDC_ROLES_ON_LOGIN
+        - name: AUTH_EMAIL_PASSWORD_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_EMAIL_PASSWORD_ENABLED
+        - name: AUTH_SIGNUP_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_SIGNUP_ENABLED
+        - name: AUTH_PASSKEY_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: AUTH_PASSKEY_ENABLED
+        - name: RETENTION_CRON
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: RETENTION_CRON
+        - name: TRUSTED_DOMAINS
+          valueFrom:
+            configMapKeyRef:
+              name: portabase-config
+              key: TRUSTED_DOMAINS
+        volumeMounts:
+        - name: portabase-data
+          mountPath: /data
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 80
+          initialDelaySeconds: 90
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: portabase-data
+        persistentVolumeClaim:
+          claimName: portabase-data-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: portabase-ns
+  name: portabase-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portabase-db
+  template:
+    metadata:
+      labels:
+        app: portabase-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16-alpine
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: portabase-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: portabase-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: portabase-db-storage
+        persistentVolumeClaim:
+          claimName: portabase-db-storage-claim
