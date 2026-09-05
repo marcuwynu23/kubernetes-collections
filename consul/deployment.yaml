@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: consul-ns
+  name: consul-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consul
+  template:
+    metadata:
+      labels:
+        app: consul
+    spec:
+      containers:
+      - name: consul
+        image: hashicorp/consul:latest
+        args:
+        - agent
+        - -dev
+        - -client=0.0.0.0
+        ports:
+        - name: http
+          containerPort: 8500
+        volumeMounts:
+        - name: consul-data
+          mountPath: /consul/data
+        readinessProbe:
+          httpGet:
+            path: /v1/status/leader
+            port: 8500
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /v1/status/leader
+            port: 8500
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: consul-data
+        persistentVolumeClaim:
+          claimName: consul-data-storage-claim
