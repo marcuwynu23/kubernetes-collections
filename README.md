@@ -84,6 +84,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### Alerts & Notifications
 
 - [apprise](./apprise)
+- [listmonk](./listmonk)
 
 ### Infrastructure & Security
 
