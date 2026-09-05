@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: backstage-ns
+  name: backstage-config
+data:
+  POSTGRES_HOST: backstage-db-service
+  POSTGRES_PORT: "5432"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: backstage-ns
+  name: backstage-db-config
+data:
+  POSTGRES_USER: backstage
+  POSTGRES_DB: backstage
