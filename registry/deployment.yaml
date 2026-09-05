@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: registry-ns
+  name: registry-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+      - name: registry
+        image: registry:2
+        ports:
+        - name: http
+          containerPort: 5000
+        env:
+        - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+          valueFrom:
+            configMapKeyRef:
+              name: registry-config
+              key: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+        - name: REGISTRY_HTTP_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: registry-config
+              key: REGISTRY_HTTP_ADDR
+        volumeMounts:
+        - name: registry-data
+          mountPath: /var/lib/registry
+        readinessProbe:
+          httpGet:
+            path: /v2/
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /v2/
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: registry-data
+        persistentVolumeClaim:
+          claimName: registry-data-storage-claim
