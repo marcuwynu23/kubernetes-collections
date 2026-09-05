@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: atlassian-jira-ns
+  name: jira-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jira
+  template:
+    metadata:
+      labels:
+        app: jira
+    spec:
+      containers:
+      - name: jira
+        image: atlassian/jira-software:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        env:
+        - name: ATL_JDBC_URL
+          valueFrom:
+            configMapKeyRef:
+              name: jira-config
+              key: ATL_JDBC_URL
+        - name: ATL_JDBC_USER
+          valueFrom:
+            secretKeyRef:
+              name: jira-secrets
+              key: jdbc-user
+        - name: ATL_JDBC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jira-secrets
+              key: jdbc-password
+        volumeMounts:
+        - name: jira-data
+          mountPath: /var/atlassian/application-data/jira
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 180
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: jira-data
+        persistentVolumeClaim:
+          claimName: jira-data-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: atlassian-jira-ns
+  name: jira-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jira-db
+  template:
+    metadata:
+      labels:
+        app: jira-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: jira-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jira-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: jira-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: jira-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: jira-db-storage
+        persistentVolumeClaim:
+          claimName: jira-db-storage-claim
