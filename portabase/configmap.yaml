@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: portabase-ns
+  name: portabase-config
+data:
+  TZ: Asia/Manila
+  NODE_ENV: development
+  LOG_LEVEL: info
+  PROJECT_NAME: Portabase
+  PROJECT_URL: http://localhost:8887
+  SMTP_HOST: ""
+  SMTP_PORT: ""
+  SMTP_USER: ""
+  SMTP_FROM: ""
+  AUTH_OIDC_ID: ""
+  AUTH_OIDC_TITLE: ""
+  AUTH_OIDC_DESC: ""
+  AUTH_OIDC_ICON: ""
+  AUTH_OIDC_CLIENT: ""
+  AUTH_OIDC_ISSUER_URL: ""
+  AUTH_OIDC_HOST: ""
+  AUTH_OIDC_SCOPES: ""
+  AUTH_OIDC_DISCOVERY_ENDPOINT: ""
+  AUTH_OIDC_JWKS_ENDPOINT: ""
+  AUTH_OIDC_PKCE: "true"
+  ALLOWED_GROUP: admin
+  AUTH_OIDC_ROLE_MAP: ""
+  AUTH_ALLOW_LINKING: "true"
+  AUTH_ALLOW_UNLINKING: "true"
+  AUTH_SOCIAL_ID: ""
+  AUTH_SOCIAL_TITLE: ""
+  AUTH_SOCIAL_DESC: ""
+  AUTH_SOCIAL_ICON: ""
+  AUTH_SOCIAL_CLIENT: ""
+  AUTH_SOCIAL_APPLE_APP_BUNDLE_IDENTIFIER: ""
+  AUTH_SYNC_OIDC_ROLES_ON_LOGIN: "true"
+  AUTH_EMAIL_PASSWORD_ENABLED: "true"
+  AUTH_SIGNUP_ENABLED: "true"
+  AUTH_PASSKEY_ENABLED: "true"
+  RETENTION_CRON: "* * * * *"
+  TRUSTED_DOMAINS: "http://localhost:8887, http://localhost:3055, http://localhost:3056"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: portabase-ns
+  name: portabase-db-config
+data:
+  POSTGRES_USER: devuser
+  POSTGRES_DB: devdb
