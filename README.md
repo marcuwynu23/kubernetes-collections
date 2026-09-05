@@ -98,6 +98,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 - [filebrowser](./filebrowser)
 - [portabase](./portabase)
+- [mattermost](./mattermost)
 
 ## Quick Start
 
