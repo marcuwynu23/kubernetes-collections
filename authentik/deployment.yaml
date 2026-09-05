@@ -1,0 +1,276 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: authentik-ns
+  name: authentik-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentik-server
+  template:
+    metadata:
+      labels:
+        app: authentik-server
+    spec:
+      containers:
+      - name: server
+        image: ghcr.io/goauthentik/server:latest
+        args:
+        - server
+        ports:
+        - name: http
+          containerPort: 9000
+        env:
+        - name: AUTHENTIK_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: secret-key
+        - name: AUTHENTIK_REDIS__HOST
+          valueFrom:
+            configMapKeyRef:
+              name: authentik-config
+              key: AUTHENTIK_REDIS__HOST
+        - name: AUTHENTIK_POSTGRESQL__HOST
+          valueFrom:
+            configMapKeyRef:
+              name: authentik-config
+              key: AUTHENTIK_POSTGRESQL__HOST
+        - name: AUTHENTIK_POSTGRESQL__USER
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-user
+        - name: AUTHENTIK_POSTGRESQL__NAME
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-db
+        - name: AUTHENTIK_POSTGRESQL__PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-password
+        - name: AUTHENTIK_BOOTSTRAP_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: authentik-config
+              key: AUTHENTIK_BOOTSTRAP_USERNAME
+        - name: AUTHENTIK_BOOTSTRAP_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              name: authentik-config
+              key: AUTHENTIK_BOOTSTRAP_EMAIL
+        - name: AUTHENTIK_BOOTSTRAP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: bootstrap-password
+        volumeMounts:
+        - name: media
+          mountPath: /media
+        - name: custom-templates
+          mountPath: /templates
+        readinessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: media
+        persistentVolumeClaim:
+          claimName: authentik-media-storage-claim
+      - name: custom-templates
+        persistentVolumeClaim:
+          claimName: authentik-templates-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: authentik-ns
+  name: authentik-worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentik-worker
+  template:
+    metadata:
+      labels:
+        app: authentik-worker
+    spec:
+      containers:
+      - name: worker
+        image: ghcr.io/goauthentik/server:latest
+        args:
+        - worker
+        env:
+        - name: AUTHENTIK_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: secret-key
+        - name: AUTHENTIK_REDIS__HOST
+          valueFrom:
+            configMapKeyRef:
+              name: authentik-config
+              key: AUTHENTIK_REDIS__HOST
+        - name: AUTHENTIK_POSTGRESQL__HOST
+          valueFrom:
+            configMapKeyRef:
+              name: authentik-config
+              key: AUTHENTIK_POSTGRESQL__HOST
+        - name: AUTHENTIK_POSTGRESQL__USER
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-user
+        - name: AUTHENTIK_POSTGRESQL__NAME
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-db
+        - name: AUTHENTIK_POSTGRESQL__PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-password
+        volumeMounts:
+        - name: media
+          mountPath: /media
+        - name: certs
+          mountPath: /certs
+        - name: custom-templates
+          mountPath: /templates
+      volumes:
+      - name: media
+        persistentVolumeClaim:
+          claimName: authentik-media-storage-claim
+      - name: certs
+        persistentVolumeClaim:
+          claimName: authentik-certs-storage-claim
+      - name: custom-templates
+        persistentVolumeClaim:
+          claimName: authentik-templates-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: authentik-ns
+  name: authentik-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentik-db
+  template:
+    metadata:
+      labels:
+        app: authentik-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: authentik-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: authentik-db-storage
+        persistentVolumeClaim:
+          claimName: authentik-db-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: authentik-ns
+  name: authentik-redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentik-redis
+  template:
+    metadata:
+      labels:
+        app: authentik-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7
+        ports:
+        - name: redis
+          containerPort: 6379
+        volumeMounts:
+        - name: authentik-redis-storage
+          mountPath: /data
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: authentik-redis-storage
+        persistentVolumeClaim:
+          claimName: authentik-redis-storage-claim
