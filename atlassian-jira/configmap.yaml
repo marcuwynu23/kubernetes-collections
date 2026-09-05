@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: atlassian-jira-ns
+  name: jira-config
+data:
+  ATL_JDBC_URL: jdbc:postgresql://jira-db-service:5432/jiradb
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: atlassian-jira-ns
+  name: jira-db-config
+data:
+  POSTGRES_USER: admin
+  POSTGRES_DB: jiradb
