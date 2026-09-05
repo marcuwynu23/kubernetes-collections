@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: elasticsearch-ns
+  name: elasticsearch-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+        ports:
+        - name: http
+          containerPort: 9200
+        - name: transport
+          containerPort: 9300
+        env:
+        - name: node.name
+          valueFrom:
+            configMapKeyRef:
+              name: elasticsearch-config
+              key: node.name
+        - name: cluster.name
+          valueFrom:
+            configMapKeyRef:
+              name: elasticsearch-config
+              key: cluster.name
+        - name: discovery.type
+          valueFrom:
+            configMapKeyRef:
+              name: elasticsearch-config
+              key: discovery.type
+        - name: bootstrap.memory_lock
+          valueFrom:
+            configMapKeyRef:
+              name: elasticsearch-config
+              key: bootstrap.memory_lock
+        - name: ES_JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              name: elasticsearch-config
+              key: ES_JAVA_OPTS
+        - name: xpack.security.enabled
+          valueFrom:
+            configMapKeyRef:
+              name: elasticsearch-config
+              key: xpack.security.enabled
+        volumeMounts:
+        - name: elasticsearch-data
+          mountPath: /usr/share/elasticsearch/data
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9200
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9200
+          initialDelaySeconds: 90
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: elasticsearch-data
+        persistentVolumeClaim:
+          claimName: elasticsearch-data-storage-claim
