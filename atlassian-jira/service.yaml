@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: atlassian-jira-ns
+  name: jira-service
+spec:
+  type: ClusterIP
+  selector:
+    app: jira
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: atlassian-jira-ns
+  name: jira-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: jira-db
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
