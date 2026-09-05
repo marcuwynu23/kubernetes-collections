@@ -73,6 +73,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### AI Orchestration Tools
 
 - [n8n](./n8n)
+- [activepieces](./activepieces)
 
 ### Message Brokers & Queuing
 
