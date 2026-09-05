@@ -37,6 +37,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### Developer Tools and Platforms
 
 - [verdaccio](./verdaccio)
+- [backstage](./backstage)
 
 ### Database & Database Management
 
