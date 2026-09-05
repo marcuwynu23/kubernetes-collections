@@ -2,8 +2,6 @@
 
 Portabase is a self-hosted application for building internal knowledge bases, intranet sites, and documentation portals. It runs as a containerized web app backed by PostgreSQL for persistent storage.
 
-Converted from `docker-compose-collections/portabase/docker-compose.yml` to Kubernetes manifests.
-
 ## How Portabase works
 
 ```mermaid
