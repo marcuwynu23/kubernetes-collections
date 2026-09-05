@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: bugzilla-ns
+  name: bugzilla-config
+data:
+  DB_TYPE: mysql
+  DB_HOST: bugzilla-db-service
+  DB_DATABASE: bugzilla
+  DB_USER: bugzilla
+  BUGZILLA_URL: http://localhost:8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: bugzilla-ns
+  name: bugzilla-db-config
+data:
+  MYSQL_DATABASE: bugzilla
+  MYSQL_USER: bugzilla
