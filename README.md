@@ -38,6 +38,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 - [verdaccio](./verdaccio)
 - [backstage](./backstage)
+- [atlassian-jira](./atlassian-jira)
 
 ### Database & Database Management
 
