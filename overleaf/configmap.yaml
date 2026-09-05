@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: overleaf-ns
+  name: overleaf-config
+data:
+  OVERLEAF_APP_NAME: Overleaf Community Edition
+  OVERLEAF_MONGO_URL: mongodb://overleaf-mongo-service/overleaf
+  OVERLEAF_REDIS_HOST: overleaf-redis-service
+  REDIS_HOST: overleaf-redis-service
+  ENABLED_LINKED_FILE_TYPES: project_file,project_output_file
+  ENABLE_CONVERSIONS: "true"
+  EMAIL_CONFIRMATION_DISABLED: "true"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: overleaf-ns
+  name: overleaf-mongo-config
+data:
+  MONGO_INITDB_DATABASE: overleaf
