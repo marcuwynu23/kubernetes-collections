@@ -2,8 +2,6 @@
 
 authentik is an open-source identity provider (IdP) and SSO platform for applications and internal services.
 
-Converted from `docker-compose-collections/authentik/docker-compose.yml` to Kubernetes manifests.
-
 ## How it works
 
 ```mermaid
