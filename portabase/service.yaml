@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: portabase-ns
+  name: portabase-service
+spec:
+  type: ClusterIP
+  selector:
+    app: portabase
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8887
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: portabase-ns
+  name: portabase-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: portabase-db
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
