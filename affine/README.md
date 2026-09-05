@@ -2,8 +2,6 @@
 
 AFFiNE is an open-source knowledge base that combines docs, whiteboards, and databases — a privacy-focused alternative to Notion and Miro.
 
-Converted from `docker-compose-collections/affine/docker-compose.yml` to Kubernetes manifests.
-
 ## How AFFiNE works
 
 ```mermaid
