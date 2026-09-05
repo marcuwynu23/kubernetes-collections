@@ -3,8 +3,6 @@
 Overleaf is an open-source online real-time collaborative LaTeX editor.
 It provides a browser-based editor with rich LaTeX support, collaboration features, and project management.
 
-Converted from `docker-compose-collections/overleaf/docker-compose.yml` to Kubernetes manifests.
-
 ## How Overleaf works
 
 ```mermaid
