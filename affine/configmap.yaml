@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: affine-ns
+  name: affine-config
+data:
+  REDIS_SERVER_HOST: affine-redis-service
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: affine-ns
+  name: affine-db-config
+data:
+  POSTGRES_USER: affine
+  POSTGRES_DB: affine
+  POSTGRES_INITDB_ARGS: --data-checksums
+  POSTGRES_HOST_AUTH_METHOD: trust
