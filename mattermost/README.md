@@ -3,8 +3,6 @@
 Mattermost is a self-hosted team messaging platform — an open-source alternative to Slack.
 It provides channels, direct messages, file sharing, integrations, and plugin support.
 
-Converted from `docker-compose-collections/mattermost/docker-compose.yml` to Kubernetes manifests.
-
 ## How Mattermost works
 
 ```mermaid
