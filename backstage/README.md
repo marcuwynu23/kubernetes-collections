@@ -3,8 +3,6 @@
 Backstage is an open platform for building developer portals.
 It unifies infrastructure tooling, services, and documentation into a single catalog-driven UI.
 
-Converted from `docker-compose-collections/backstage/docker-compose.yml` to Kubernetes manifests.
-
 ## How Backstage works
 
 ```mermaid
