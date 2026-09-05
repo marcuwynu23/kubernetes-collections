@@ -47,6 +47,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 - [dbx](./dbx)
 - [documentdb](./documentdb)
 - [couchdb](./couchdb)
+- [elasticsearch](./elasticsearch)
 
 ### Source Code Management
 
