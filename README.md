@@ -86,6 +86,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 
 - [pihole](./pihole)
 - [keycloak](./keycloak)
+- [authentik](./authentik)
 - [nessus](./nessus)
 - [splunk](./splunk/)
 
