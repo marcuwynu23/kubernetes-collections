@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: affine-ns
+  name: affine-service
+spec:
+  type: ClusterIP
+  selector:
+    app: affine
+  ports:
+  - name: http
+    protocol: TCP
+    port: 3010
+    targetPort: 3010
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: affine-ns
+  name: affine-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: affine-db
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: affine-ns
+  name: affine-redis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: affine-redis
+  ports:
+  - name: redis
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
