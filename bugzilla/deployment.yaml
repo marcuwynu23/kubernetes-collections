@@ -1,0 +1,138 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bugzilla-ns
+  name: bugzilla-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bugzilla
+  template:
+    metadata:
+      labels:
+        app: bugzilla
+    spec:
+      containers:
+      - name: bugzilla
+        image: nasqueron/bugzilla:latest
+        ports:
+        - name: http
+          containerPort: 80
+        env:
+        - name: DB_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: bugzilla-config
+              key: DB_TYPE
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: bugzilla-config
+              key: DB_HOST
+        - name: DB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: bugzilla-config
+              key: DB_DATABASE
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: bugzilla-config
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: bugzilla-secrets
+              key: db-password
+        - name: BUGZILLA_URL
+          valueFrom:
+            configMapKeyRef:
+              name: bugzilla-config
+              key: BUGZILLA_URL
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bugzilla-ns
+  name: bugzilla-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bugzilla-db
+  template:
+    metadata:
+      labels:
+        app: bugzilla-db
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+        - name: mysql
+          containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: bugzilla-secrets
+              key: mysql-root-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: bugzilla-secrets
+              key: mysql-database
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: bugzilla-secrets
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: bugzilla-secrets
+              key: mysql-password
+        volumeMounts:
+        - name: bugzilla-db-storage
+          mountPath: /var/lib/mysql
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - mysqladmin ping -h 127.0.0.1 -u root -p"$MYSQL_ROOT_PASSWORD"
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - mysqladmin ping -h 127.0.0.1 -u root -p"$MYSQL_ROOT_PASSWORD"
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: bugzilla-db-storage
+        persistentVolumeClaim:
+          claimName: bugzilla-db-storage-claim
