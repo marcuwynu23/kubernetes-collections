@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: registry-ns
+  name: registry-config
+data:
+  REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+  REGISTRY_HTTP_ADDR: 0.0.0.0:5000
