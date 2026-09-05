@@ -1,0 +1,220 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: activepieces-ns
+  name: activepieces-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activepieces
+  template:
+    metadata:
+      labels:
+        app: activepieces
+    spec:
+      containers:
+      - name: activepieces
+        image: activepieces/activepieces:latest
+        ports:
+        - name: http
+          containerPort: 80
+        env:
+        - name: AP_REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_REDIS_HOST
+        - name: AP_REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_REDIS_PORT
+        - name: AP_DATABASE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_DATABASE_TYPE
+        - name: AP_POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_POSTGRES_HOST
+        - name: AP_POSTGRES_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_POSTGRES_PORT
+        - name: AP_POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: postgres-user
+        - name: AP_POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: postgres-password
+        - name: AP_POSTGRES_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: postgres-db
+        - name: AP_FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_FRONTEND_URL
+        - name: AP_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: encryption-key
+        - name: AP_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: jwt-secret
+        - name: AP_TELEMETRY_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_TELEMETRY_ENABLED
+        - name: AP_SYNC_PIECES_ON_STARTUP
+          valueFrom:
+            configMapKeyRef:
+              name: activepieces-config
+              key: AP_SYNC_PIECES_ON_STARTUP
+        volumeMounts:
+        - name: activepieces-data
+          mountPath: /root/.activepieces
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: activepieces-data
+        persistentVolumeClaim:
+          claimName: activepieces-data-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: activepieces-ns
+  name: activepieces-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activepieces-db
+  template:
+    metadata:
+      labels:
+        app: activepieces-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: activepieces-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: activepieces-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: activepieces-db-storage
+        persistentVolumeClaim:
+          claimName: activepieces-db-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: activepieces-ns
+  name: activepieces-redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activepieces-redis
+  template:
+    metadata:
+      labels:
+        app: activepieces-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7
+        ports:
+        - name: redis
+          containerPort: 6379
+        volumeMounts:
+        - name: activepieces-redis-storage
+          mountPath: /data
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: activepieces-redis-storage
+        persistentVolumeClaim:
+          claimName: activepieces-redis-storage-claim
