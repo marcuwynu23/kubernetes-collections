@@ -1,0 +1,679 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postiz-ns
+  name: postiz-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz
+  template:
+    metadata:
+      labels:
+        app: postiz
+    spec:
+      containers:
+      - name: postiz
+        image: ghcr.io/gitroomhq/postiz-app:latest
+        ports:
+        - name: http
+          containerPort: 5000
+        env:
+        - name: MAIN_URL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: MAIN_URL
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: FRONTEND_URL
+        - name: NEXT_PUBLIC_BACKEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: NEXT_PUBLIC_BACKEND_URL
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: jwt-secret
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: REDIS_URL
+        - name: BACKEND_INTERNAL_URL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: BACKEND_INTERNAL_URL
+        - name: TEMPORAL_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: TEMPORAL_ADDRESS
+        - name: IS_GENERAL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: IS_GENERAL
+        - name: DISABLE_REGISTRATION
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: DISABLE_REGISTRATION
+        - name: RUN_CRON
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: RUN_CRON
+        - name: STORAGE_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: STORAGE_PROVIDER
+        - name: UPLOAD_DIRECTORY
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: UPLOAD_DIRECTORY
+        - name: NEXT_PUBLIC_UPLOAD_DIRECTORY
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: NEXT_PUBLIC_UPLOAD_DIRECTORY
+        - name: X_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: x-api-key
+        - name: X_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: x-api-secret
+        - name: LINKEDIN_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: LINKEDIN_CLIENT_ID
+        - name: LINKEDIN_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: linkedin-client-secret
+        - name: REDDIT_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: REDDIT_CLIENT_ID
+        - name: REDDIT_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: reddit-client-secret
+        - name: GITHUB_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: GITHUB_CLIENT_ID
+        - name: GITHUB_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: github-client-secret
+        - name: BEEHIIVE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: beehive-api-key
+        - name: BEEHIIVE_PUBLICATION_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: BEEHIIVE_PUBLICATION_ID
+        - name: THREADS_APP_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: THREADS_APP_ID
+        - name: THREADS_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: threads-app-secret
+        - name: FACEBOOK_APP_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: FACEBOOK_APP_ID
+        - name: FACEBOOK_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: facebook-app-secret
+        - name: YOUTUBE_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: YOUTUBE_CLIENT_ID
+        - name: YOUTUBE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: youtube-client-secret
+        - name: TIKTOK_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: TIKTOK_CLIENT_ID
+        - name: TIKTOK_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: tiktok-client-secret
+        - name: PINTEREST_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: PINTEREST_CLIENT_ID
+        - name: PINTEREST_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: pinterest-client-secret
+        - name: DRIBBBLE_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: DRIBBBLE_CLIENT_ID
+        - name: DRIBBBLE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: dribbble-client-secret
+        - name: DISCORD_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: DISCORD_CLIENT_ID
+        - name: DISCORD_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: discord-client-secret
+        - name: DISCORD_BOT_TOKEN_ID
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: discord-bot-token-id
+        - name: SLACK_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: SLACK_ID
+        - name: SLACK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: slack-secret
+        - name: SLACK_SIGNING_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: slack-signing-secret
+        - name: MASTODON_URL
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: MASTODON_URL
+        - name: MASTODON_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: MASTODON_CLIENT_ID
+        - name: MASTODON_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: mastodon-client-secret
+        - name: EXTENSION_ID
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: EXTENSION_ID
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: openai-api-key
+        - name: NEXT_PUBLIC_DISCORD_SUPPORT
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: NEXT_PUBLIC_DISCORD_SUPPORT
+        - name: NEXT_PUBLIC_POLOTNO
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: NEXT_PUBLIC_POLOTNO
+        - name: API_LIMIT
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: API_LIMIT
+        - name: FEE_AMOUNT
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: FEE_AMOUNT
+        - name: STRIPE_PUBLISHABLE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: STRIPE_PUBLISHABLE_KEY
+        - name: STRIPE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: stripe-secret-key
+        - name: STRIPE_SIGNING_KEY
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: stripe-signing-key
+        - name: STRIPE_SIGNING_KEY_CONNECT
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: stripe-signing-key-connect
+        - name: NX_ADD_PLUGINS
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-config
+              key: NX_ADD_PLUGINS
+        volumeMounts:
+        - name: postiz-config
+          mountPath: /config
+        - name: postiz-uploads
+          mountPath: /uploads
+        readinessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: postiz-config
+        persistentVolumeClaim:
+          claimName: postiz-config-storage-claim
+      - name: postiz-uploads
+        persistentVolumeClaim:
+          claimName: postiz-uploads-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postiz-ns
+  name: postiz-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz-db
+  template:
+    metadata:
+      labels:
+        app: postiz-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:17-alpine
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postiz-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: postiz-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: postiz-db-storage
+        persistentVolumeClaim:
+          claimName: postiz-db-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postiz-ns
+  name: postiz-redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz-redis
+  template:
+    metadata:
+      labels:
+        app: postiz-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.2
+        ports:
+        - name: redis
+          containerPort: 6379
+        volumeMounts:
+        - name: postiz-redis-storage
+          mountPath: /data
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: postiz-redis-storage
+        persistentVolumeClaim:
+          claimName: postiz-redis-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postiz-ns
+  name: postiz-temporal-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz-temporal
+  template:
+    metadata:
+      labels:
+        app: postiz-temporal
+    spec:
+      containers:
+      - name: temporal
+        image: temporalio/auto-setup:1.28.1
+        ports:
+        - name: rpc
+          containerPort: 7233
+        env:
+        - name: DB
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: DB
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: DB_PORT
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postiz-temporal-secrets
+              key: postgres-user
+        - name: POSTGRES_PWD
+          valueFrom:
+            secretKeyRef:
+              name: postiz-temporal-secrets
+              key: postgres-password
+        - name: POSTGRES_SEEDS
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: POSTGRES_SEEDS
+        - name: DYNAMIC_CONFIG_FILE_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: DYNAMIC_CONFIG_FILE_PATH
+        - name: ENABLE_ES
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: ENABLE_ES
+        - name: ES_SEEDS
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: ES_SEEDS
+        - name: ES_VERSION
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: ES_VERSION
+        - name: TEMPORAL_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: TEMPORAL_NAMESPACE
+        volumeMounts:
+        - name: dynamicconfig
+          mountPath: /etc/temporal/config/dynamicconfig/development-sql.yaml
+          subPath: development-sql.yaml
+        readinessProbe:
+          tcpSocket:
+            port: 7233
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 7233
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: dynamicconfig
+        configMap:
+          name: postiz-temporal-dynamicconfig
+          items:
+          - key: development-sql.yaml
+            path: development-sql.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postiz-ns
+  name: postiz-temporal-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz-temporal-db
+  template:
+    metadata:
+      labels:
+        app: postiz-temporal-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postiz-temporal-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postiz-temporal-secrets
+              key: postgres-password
+        volumeMounts:
+        - name: postiz-temporal-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: postiz-temporal-db-storage
+        persistentVolumeClaim:
+          claimName: postiz-temporal-db-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postiz-ns
+  name: postiz-temporal-es-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz-temporal-es
+  template:
+    metadata:
+      labels:
+        app: postiz-temporal-es
+    spec:
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:7.17.27
+        ports:
+        - name: http
+          containerPort: 9200
+        env:
+        - name: cluster.routing.allocation.disk.threshold_enabled
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: cluster.routing.allocation.disk.threshold_enabled
+        - name: cluster.routing.allocation.disk.watermark.low
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: cluster.routing.allocation.disk.watermark.low
+        - name: cluster.routing.allocation.disk.watermark.high
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: cluster.routing.allocation.disk.watermark.high
+        - name: cluster.routing.allocation.disk.watermark.flood_stage
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: cluster.routing.allocation.disk.watermark.flood_stage
+        - name: discovery.type
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: discovery.type
+        - name: ES_JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: ES_JAVA_OPTS
+        - name: xpack.security.enabled
+          valueFrom:
+            configMapKeyRef:
+              name: postiz-temporal-config
+              key: xpack.security.enabled
+        volumeMounts:
+        - name: postiz-temporal-es-storage
+          mountPath: /usr/share/elasticsearch/data
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9200
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9200
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: postiz-temporal-es-storage
+        persistentVolumeClaim:
+          claimName: postiz-temporal-es-storage-claim
