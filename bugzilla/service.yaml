@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: bugzilla-ns
+  name: bugzilla-service
+spec:
+  type: ClusterIP
+  selector:
+    app: bugzilla
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: bugzilla-ns
+  name: bugzilla-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: bugzilla-db
+  ports:
+  - name: mysql
+    protocol: TCP
+    port: 3306
+    targetPort: 3306
