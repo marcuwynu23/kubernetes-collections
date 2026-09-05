@@ -97,6 +97,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 ### Other Services
 
 - [filebrowser](./filebrowser)
+- [portabase](./portabase)
 
 ## Quick Start
 
