@@ -106,6 +106,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 - [mattermost](./mattermost)
 - [affine](./affine)
 - [overleaf](./overleaf)
+- [postiz](./postiz)
 
 ## Quick Start
 
