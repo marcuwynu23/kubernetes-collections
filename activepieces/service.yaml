@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: activepieces-ns
+  name: activepieces-service
+spec:
+  type: ClusterIP
+  selector:
+    app: activepieces
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: activepieces-ns
+  name: activepieces-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: activepieces-db
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: activepieces-ns
+  name: activepieces-redis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: activepieces-redis
+  ports:
+  - name: redis
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
