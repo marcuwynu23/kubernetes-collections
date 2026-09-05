@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: affine-ns
+  name: affine-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: affine
+  template:
+    metadata:
+      labels:
+        app: affine
+    spec:
+      containers:
+      - name: affine
+        image: ghcr.io/toeverything/affine:stable
+        ports:
+        - name: http
+          containerPort: 3010
+        env:
+        - name: REDIS_SERVER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: affine-config
+              key: REDIS_SERVER_HOST
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: affine-secrets
+              key: database-url
+        volumeMounts:
+        - name: affine-storage
+          mountPath: /root/.affine/storage
+        - name: affine-config
+          mountPath: /root/.affine/config
+        readinessProbe:
+          tcpSocket:
+            port: 3010
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3010
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: affine-storage
+        persistentVolumeClaim:
+          claimName: affine-storage-claim
+      - name: affine-config
+        persistentVolumeClaim:
+          claimName: affine-config-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: affine-ns
+  name: affine-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: affine-db
+  template:
+    metadata:
+      labels:
+        app: affine-db
+    spec:
+      containers:
+      - name: postgres
+        image: pgvector/pgvector:pg16
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: affine-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: affine-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: affine-secrets
+              key: postgres-db
+        - name: POSTGRES_INITDB_ARGS
+          valueFrom:
+            configMapKeyRef:
+              name: affine-db-config
+              key: POSTGRES_INITDB_ARGS
+        - name: POSTGRES_HOST_AUTH_METHOD
+          valueFrom:
+            configMapKeyRef:
+              name: affine-db-config
+              key: POSTGRES_HOST_AUTH_METHOD
+        volumeMounts:
+        - name: affine-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - $(POSTGRES_USER)
+            - -d
+            - $(POSTGRES_DB)
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - $(POSTGRES_USER)
+            - -d
+            - $(POSTGRES_DB)
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: affine-db-storage
+        persistentVolumeClaim:
+          claimName: affine-db-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: affine-ns
+  name: affine-redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: affine-redis
+  template:
+    metadata:
+      labels:
+        app: affine-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - name: redis
+          containerPort: 6379
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --raw
+            - incr
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --raw
+            - incr
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
