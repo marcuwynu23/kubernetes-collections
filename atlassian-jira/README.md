@@ -3,8 +3,6 @@
 Jira is a project management and issue tracking platform by Atlassian.
 It supports agile boards, workflows, sprints, and backlog management for software teams.
 
-Converted from `docker-compose-collections/atlassian-jira/docker-compose.yml` to Kubernetes manifests.
-
 ## How Jira works
 
 ```mermaid
