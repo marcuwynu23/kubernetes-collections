@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mattermost-ns
+  name: mattermost-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mattermost
+  template:
+    metadata:
+      labels:
+        app: mattermost
+    spec:
+      containers:
+      - name: mattermost
+        image: mattermost/mattermost-team-edition:latest
+        ports:
+        - name: http
+          containerPort: 8065
+        env:
+        - name: MM_SQLSETTINGS_DRIVERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: mattermost-config
+              key: MM_SQLSETTINGS_DRIVERNAME
+        - name: MM_SQLSETTINGS_DATASOURCE
+          valueFrom:
+            secretKeyRef:
+              name: mattermost-secrets
+              key: datasource
+        volumeMounts:
+        - name: mattermost-data
+          mountPath: /mattermost/data
+        - name: mattermost-logs
+          mountPath: /mattermost/logs
+        - name: mattermost-config
+          mountPath: /mattermost/config
+        - name: mattermost-plugins
+          mountPath: /mattermost/plugins
+        readinessProbe:
+          tcpSocket:
+            port: 8065
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8065
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: mattermost-data
+        persistentVolumeClaim:
+          claimName: mattermost-data-storage-claim
+      - name: mattermost-logs
+        persistentVolumeClaim:
+          claimName: mattermost-logs-storage-claim
+      - name: mattermost-config
+        persistentVolumeClaim:
+          claimName: mattermost-config-storage-claim
+      - name: mattermost-plugins
+        persistentVolumeClaim:
+          claimName: mattermost-plugins-storage-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mattermost-ns
+  name: mattermost-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mattermost-db
+  template:
+    metadata:
+      labels:
+        app: mattermost-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16-alpine
+        ports:
+        - name: postgres
+          containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: mattermost-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mattermost-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: mattermost-secrets
+              key: postgres-db
+        volumeMounts:
+        - name: mattermost-db-storage
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: mattermost-db-storage
+        persistentVolumeClaim:
+          claimName: mattermost-db-storage-claim
