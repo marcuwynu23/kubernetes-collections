@@ -101,6 +101,7 @@ This repository is a practical collection of Kubernetes manifests for common inf
 - [portabase](./portabase)
 - [mattermost](./mattermost)
 - [affine](./affine)
+- [overleaf](./overleaf)
 
 ## Quick Start
 
