@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: overleaf-ns
+  name: overleaf-service
+spec:
+  type: ClusterIP
+  selector:
+    app: overleaf
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: overleaf-ns
+  name: overleaf-mongo-service
+spec:
+  type: ClusterIP
+  selector:
+    app: overleaf-mongo
+  ports:
+  - name: mongo
+    protocol: TCP
+    port: 27017
+    targetPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: overleaf-ns
+  name: overleaf-redis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: overleaf-redis
+  ports:
+  - name: redis
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
