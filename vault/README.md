@@ -103,3 +103,12 @@ This will create all required resources:
 - The root token is stored in the Secret `vault-secrets` - change it before using in production.
 - Data persists via the PersistentVolumeClaim.
 - For production, use sealed storage, external backends, and proper initialization.
+
+## References
+
+- Official site: <https://www.vaultproject.io>
+- Documentation: <https://developer.hashicorp.com/vault/docs>
+- Docker Hub image: <https://hub.docker.com/r/hashicorp/vault>
+- GitHub repo: <https://github.com/hashicorp/vault>
+- YouTube — Getting started with HashiCorp Vault: <https://www.youtube.com/watch?v=Oyvnicmxmbo>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
