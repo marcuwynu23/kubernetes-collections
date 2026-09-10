@@ -118,3 +118,11 @@ Follow the setup wizard on first launch to configure your license and admin acco
 - Jira requires a valid license (free trial available from Atlassian).
 - First startup can take several minutes — probes allow a long startup window; allocate at least 2GB RAM.
 - PostgreSQL runs with 1 replica — do not scale it; Jira itself runs a single node (Data Center clustering is not configured here).
+
+## References
+
+- Official site: <https://www.atlassian.com/software/jira>
+- Documentation: <https://confluence.atlassian.com/adminjiraserver100/installing-jira-applications-1442844855.html>
+- Docker Hub image: <https://hub.docker.com/r/atlassian/jira-software>
+- YouTube — Introduction to Jira Data Center with Docker (Atlassian Community Nairobi): <https://www.youtube.com/watch?v=W67kcsaKSeI>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
