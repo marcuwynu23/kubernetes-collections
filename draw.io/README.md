@@ -77,3 +77,12 @@ This will create all required resources:
 - Diagrams persist via the PersistentVolumeClaim.
 - Multiple replicas support horizontal scaling.
 - Access over HTTPS with a valid certificate is recommended for production use.
+
+## References
+
+- Official site: <https://www.diagrams.net>
+- GitHub repo: <https://github.com/jgraph/drawio>
+- Docker image repo: <https://github.com/jgraph/docker-drawio>
+- Docker Hub image: <https://hub.docker.com/r/jgraph/drawio>
+- YouTube — How To Self host DRAW IO in Your Home Lab Using Docker!: <https://www.youtube.com/watch?v=USoCtdREmeE>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
