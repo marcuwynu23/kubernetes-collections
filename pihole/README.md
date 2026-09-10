@@ -94,3 +94,11 @@ This will create all required resources:
 - DNS queries are logged and ad/tracker blocking is visible in the Web UI.
 - Upstream DNS servers can be configured via the ConfigMap.
 - Data persists via the PersistentVolumeClaim.
+
+## References
+
+- Official site: <https://pi-hole.net>
+- Documentation: <https://docs.pi-hole.net/>
+- Docker Hub image: <https://hub.docker.com/r/pihole/pihole>
+- YouTube — Installing and Running Pi-Hole using Docker: <https://www.youtube.com/watch?v=0X4mxj-uYsc>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
