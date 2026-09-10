@@ -96,3 +96,11 @@ Or expose via Ingress/LoadBalancer (with TLS) for cluster-wide use.
 - Configure TLS/auth before exposing outside trusted networks.
 - No Secret is used — the compose stack sets no credentials.
 - Grow `registry-data-storage-claim` as image storage needs increase.
+
+## References
+
+- Official site: <https://distribution.github.io/distribution/>
+- GitHub repo: <https://github.com/docker/distribution>
+- Docker Hub image: <https://hub.docker.com/_/registry>
+- YouTube — Self Hosted Docker Registry: <https://www.youtube.com/watch?v=DMDRxL11WTE>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
