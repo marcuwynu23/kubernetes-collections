@@ -118,3 +118,11 @@ This will create all required resources:
 - Do not commit real secrets to source control — the defaults match `.env.example` placeholders.
 - PostgreSQL runs with 1 replica — do not scale it; scale only `portabase-deployment` with `kubectl scale deployment portabase-deployment --replicas=N -n portabase-ns`.
 - The separate `agent/` edge-agent demo stack from the compose repo (with its own MongoDB test DBs) is out of scope here.
+
+## References
+
+- Official site: <https://portabase.io>
+- Documentation: <https://portabase.io/docs>
+- GitHub repo: <https://github.com/portabase/portabase>
+- YouTube — Portabase demo: <https://www.youtube.com/watch?v=nSTzT27GgAg>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
