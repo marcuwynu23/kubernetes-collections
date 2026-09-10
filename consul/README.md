@@ -91,3 +91,11 @@ kubectl exec -n consul-ns deploy/consul-deployment -- consul kv get mykey
 - For production deployments, configure a proper cluster with persistent storage.
 - No ConfigMap/Secret is used — the compose stack sets no environment variables.
 - Only port `8500` is exposed (matching compose); gossip/DNS ports (`8300`/`8301`/`8302`/`8600`) are container-local in dev mode.
+
+## References
+
+- Official site: <https://developer.hashicorp.com/consul>
+- Documentation: <https://developer.hashicorp.com/consul/docs>
+- Docker Hub image: <https://hub.docker.com/r/hashicorp/consul>
+- YouTube — Consul Service Mesh Tutorial for Beginners (TechWorld with Nana): <https://www.youtube.com/watch?v=s3I1kKKfjtQ>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
