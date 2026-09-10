@@ -91,3 +91,12 @@ This will create all required resources:
 - File storage persists via `filebrowser-data-pvc`.
 - Database metadata persists via `filebrowser-database-pvc`.
 - Configure proper access controls before exposing publicly.
+
+## References
+
+- Official site: <https://filebrowser.org>
+- Documentation: <https://filebrowser.org/installation.html>
+- GitHub repo: <https://github.com/filebrowser/filebrowser>
+- Docker Hub image: <https://hub.docker.com/r/filebrowser/filebrowser>
+- YouTube — File Browser full setup and the review - Setup file sharing using docker.: <https://www.youtube.com/watch?v=O7yJdD5xT6k>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
