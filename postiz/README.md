@@ -120,3 +120,11 @@ This will create all required resources:
 - Configure your social media API credentials in `secret.yaml`/`configmap.yaml` for each platform.
 - First startup can take several minutes (Temporal auto-setup + app init).
 - All databases run with 1 replica each — do not scale them.
+
+## References
+
+- Official site: <https://postiz.com>
+- Documentation: <https://docs.postiz.com>
+- GitHub repo: <https://github.com/gitroomhq/postiz-app>
+- YouTube — Self Hosted Postiz Setup Guide (HowTo): <https://www.youtube.com/watch?v=fiB3O0IgMXY>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
