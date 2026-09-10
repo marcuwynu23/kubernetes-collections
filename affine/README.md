@@ -134,3 +134,12 @@ This will create all required resources:
 - Change the host port by editing `affine-service`, and default credentials in `secret.yaml` before exposing externally.
 - PostgreSQL and Redis run with 1 replica each — do not scale them.
 - See [AFFiNE GitHub](https://github.com/toeverything/AFFiNE) for more details.
+
+## References
+
+- Official site: <https://affine.pro>
+- Documentation: <https://docs.affine.pro/>
+- Self-host guide: <https://docs.affine.pro/self-host-affine/>
+- GitHub repo: <https://github.com/toeverything/affine>
+- YouTube — Affine Review Best Open Source Notion Alternative Tested: <https://www.youtube.com/watch?v=n_HMdzY0EvM>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
