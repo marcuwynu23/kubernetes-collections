@@ -95,3 +95,12 @@ This will create all required resources:
 - The compose `memlock: -1` ulimits have no direct Pod equivalent here — if `bootstrap.memory_lock=true` fails on your nodes, set it to `"false"` in `configmap.yaml` (or grant `IPC_LOCK` via a custom securityContext).
 - No Secret is used — the compose stack sets no credentials (`xpack.security.enabled=false`).
 - Run a single replica — clustering is not configured here.
+
+## References
+
+- Official site: <https://www.elastic.co/elasticsearch>
+- Documentation: <https://www.elastic.co/docs/reference/elasticsearch>
+- GitHub repo: <https://github.com/elastic/elasticsearch>
+- Docker Hub image: <https://hub.docker.com/_/elasticsearch>
+- YouTube — Elasticsearch: Install on Docker | Quick and Easy Installation | ELK Stack Tutorial: <https://www.youtube.com/watch?v=Xff3dBZfPTk>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
