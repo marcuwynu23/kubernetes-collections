@@ -115,3 +115,13 @@ This will create all required resources:
 - Keep `encryption-key` and `jwt-secret` in `secret.yaml` private — the defaults match `.env.example` placeholders.
 - If startup takes longer, check health of the redis and db deployments first.
 - PostgreSQL and Redis run with 1 replica each — do not scale them.
+
+## References
+
+- Official site: <https://www.activepieces.com>
+- Documentation: <https://www.activepieces.com/docs>
+- Docker Compose install guide: <https://www.activepieces.com/docs/install/options/docker-compose>
+- GitHub repo: <https://github.com/activepieces/activepieces>
+- Docker Hub image: <https://hub.docker.com/r/activepieces/activepieces>
+- YouTube — Automate ALL the things! - Self-hosting Activepieces (2GuysTek): <https://www.youtube.com/watch?v=P-GjiL-XrFQ>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
