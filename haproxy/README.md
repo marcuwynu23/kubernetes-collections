@@ -80,3 +80,11 @@ This will create all required resources:
 - Configuration is stored in a ConfigMap and mounted as a read-only file.
 - Stats dashboard available at `http://<haproxy-ip>:8404/stats`.
 - Update the ConfigMap to change backend servers or load balancing algorithm.
+
+## References
+
+- Official site: <https://www.haproxy.org>
+- Docker Hub image: <https://hub.docker.com/_/haproxy>
+- GitHub repo: <https://github.com/haproxy/haproxy>
+- YouTube — How to Compose Multiple Web Apps With Docker (HAProxy Tutorial): <https://www.youtube.com/watch?v=PtT32MW2j9c>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
