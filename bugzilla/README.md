@@ -112,3 +112,13 @@ kubectl logs -n bugzilla-ns deploy/bugzilla-deployment
 - First startup may take time due to database initialization.
 - Always keep `BUGZILLA_URL` consistent with your access URL.
 - MySQL runs with 1 replica — do not scale it.
+
+## References
+
+- Official site: <https://www.bugzilla.org/>
+- Documentation: <https://www.bugzilla.org/docs/>
+- Online docs: <https://bugzilla.readthedocs.io/>
+- GitHub repo: <https://github.com/bugzilla/bugzilla>
+- Docker Hub image: <https://hub.docker.com/r/nasqueron/bugzilla>
+- YouTube — Bugzilla for Windows 10 (installation walkthrough): <https://www.youtube.com/watch?v=4FIMB3Ouap8>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
