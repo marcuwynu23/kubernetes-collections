@@ -194,3 +194,12 @@ kubectl port-forward svc/kong-database 5432:5432 -n kong-ns
 - **Kong replicas**: 3 replicas deployed for high availability; scale up/down via `kubectl scale deployment kong-deployment --replicas=N -n kong-ns`
 - **Health probes**: Both DB and Kong have liveness/readiness/startup probes to ensure traffic only routes to healthy instances
 - **DNS**: Database service renamed to `kong-database` to match `KONG_PG_HOST` ConfigMap value for correct service discovery
+
+## References
+
+- Official site: <https://konghq.com>
+- Documentation: <https://docs.konghq.com/gateway/latest/>
+- Docker Hub image: <https://hub.docker.com/_/kong>
+- GitHub repo: <https://github.com/Kong/kong>
+- YouTube — Installing Kong's API Gateway with Docker (Kong): <https://www.youtube.com/watch?v=sJEID1xEZMg>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
