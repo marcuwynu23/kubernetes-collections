@@ -101,3 +101,12 @@ Or expose via Ingress/LoadBalancer for external access.
 - Use `ssh://git@<node-ip>:32222/<owner>/<repo>.git` for SSH clone/push.
 - Data persists via the PersistentVolumeClaim.
 - Scale the deployment with `kubectl scale deployment gitea-server --replicas=N -n gitea`
+
+## References
+
+- Official site: <https://gitea.com>
+- Documentation: <https://docs.gitea.com>
+- GitHub repo: <https://github.com/go-gitea/gitea>
+- Docker Hub image: <https://hub.docker.com/r/gitea/gitea>
+- YouTube — Self-host your own Git platform! // Gitea Tutorial: <https://www.youtube.com/watch?v=Kg0ct2lBUVg>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
