@@ -116,3 +116,13 @@ This will create all required resources:
 - pgAdmin data persists via `supabase-ui-data` PVC.
 - PostgREST API auto-generates endpoints based on database tables and schemas.
 - For production, use a managed PostgreSQL service and restrict network access.
+
+## References
+
+- Official site: <https://supabase.com>
+- Documentation: <https://supabase.com/docs>
+- Self-hosting with Docker: <https://supabase.com/docs/guides/self-hosting/docker>
+- GitHub repo: <https://github.com/supabase/supabase>
+- PostgREST docs: <https://postgrest.org/en/stable/>
+- YouTube — Complete Guide Supabase Self-Hosted + Custom S3 + Authelia: <https://www.youtube.com/watch?v=wyUr_U6Cma4>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
