@@ -62,3 +62,12 @@ This will create the required resources:
 - Update the image tag to deploy newer versions.
 - Scale the deployment with `kubectl scale deployment express-ts-sample --replicas=N -n k8s-collections`
 - CORS and API configuration may need adjustment for production use.
+
+## References
+
+- Official site (Express): <https://expressjs.com>
+- Express + TypeScript install guide: <https://expressjs.com/en/starter/installing.html>
+- GitHub repo (Express): <https://github.com/expressjs/express>
+- TypeScript: <https://www.typescriptlang.org>
+- Node.js: <https://nodejs.org/en>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
