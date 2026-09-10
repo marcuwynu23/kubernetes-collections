@@ -128,3 +128,11 @@ Then sign in again with username `akadmin` and the new password.
 - Change `secret-key` and `bootstrap-password` in `secret.yaml` before production use.
 - The worker's `/var/run/docker.sock` mount from compose is intentionally omitted (no Docker socket on Kubernetes); outposts that require it need a different setup.
 - PostgreSQL and Redis run with 1 replica each — do not scale them; scale only server/worker with `kubectl scale deployment <name> -n authentik-ns` if needed.
+
+## References
+
+- Official site: <https://goauthentik.io/>
+- Documentation: <https://docs.goauthentik.io/>
+- GitHub repo: <https://github.com/goauthentik/authentik>
+- YouTube — Secure Self Hosted with Authentik | Traefik & NGINX Proxy Manager (IBRACORP): <https://www.youtube.com/watch?v=CPURnYaW3Zk>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
