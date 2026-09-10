@@ -60,3 +60,10 @@ This will create the required resources:
 - Designed for development and testing purposes.
 - Update the image tag to deploy newer versions.
 - Scale the deployment with `kubectl scale deployment vite-app-sample-deployment --replicas=N -n k8s-collections`
+
+## References
+
+- Official site: <https://vite.dev>
+- Documentation: <https://vite.dev/guide/>
+- GitHub repo: <https://github.com/vitejs/vite>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
