@@ -87,3 +87,11 @@ This will create all required resources:
 - HTML content is stored in ConfigMap `httpd-html`.
 - Persistent data is stored in `httpd-pvc` with hostpath storage class.
 - Update the ConfigMap to change the served web content.
+
+## References
+
+- Official site: <https://httpd.apache.org>
+- Documentation: <https://httpd.apache.org/docs/2.4/>
+- GitHub repo: <https://github.com/apache/httpd>
+- Docker Hub image: <https://hub.docker.com/_/httpd>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
