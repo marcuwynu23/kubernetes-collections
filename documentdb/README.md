@@ -78,3 +78,11 @@ This will create all required resources:
 - DocumentDB is MongoDB API compatible.
 - Default credentials: admin/admin (change before exposing publicly).
 - Data persistence can be added via a PersistentVolumeClaim.
+
+## References
+
+- Official site: <https://documentdb.io>
+- Documentation (DocumentDB Local): <https://documentdb.io/docs/documentdb-local>
+- GitHub repo: <https://github.com/documentdb/documentdb>
+- YouTube — Getting Started with DocumentDB and Open Source: <https://www.youtube.com/watch?v=YlPo1SO5g0U>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
