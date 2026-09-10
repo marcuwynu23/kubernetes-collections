@@ -123,3 +123,12 @@ On first access, create your admin account and team.
 - For production, configure a reverse proxy with TLS in front of Mattermost.
 - PostgreSQL runs with 1 replica — do not scale it; scale only `mattermost-deployment` with `kubectl scale deployment mattermost-deployment --replicas=N -n mattermost-ns`.
 - See [Mattermost docs](https://docs.mattermost.com/) for full configuration reference.
+
+## References
+
+- Official site: <https://mattermost.com>
+- Documentation: <https://docs.mattermost.com/>
+- Docker Hub image: <https://hub.docker.com/r/mattermost/mattermost-team-edition>
+- GitHub repo: <https://github.com/mattermost/mattermost>
+- YouTube — Mattermost - An Open Source, Self Hosted, Slack Chat Alternative: <https://www.youtube.com/watch?v=KiZzImMGr-4>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
