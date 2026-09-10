@@ -103,3 +103,12 @@ kubectl port-forward svc/couchdb-service 5984:5984 -n couchdb-ns
 - CouchDB is schema-free — each document can have a different structure.
 - For production clusters, configure multiple nodes with the cluster setup wizard in Fauxton.
 - Data persists via the PersistentVolumeClaim.
+
+## References
+
+- Official site: <https://couchdb.apache.org/>
+- Docker install docs: <https://docs.couchdb.org/en/stable/install/docker.html>
+- GitHub repo: <https://github.com/apache/couchdb-docker>
+- Docker Hub image: <https://hub.docker.com/_/couchdb>
+- YouTube — Apache CouchDB Installation, Configuration & Bi-Directional Replication: <https://www.youtube.com/watch?v=D2rz8qUmezE>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
