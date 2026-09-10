@@ -118,3 +118,11 @@ Register the first admin account on the welcome page.
 - No Secret is used here — the compose stack sets no passwords (MongoDB runs without auth, matching compose).
 - MongoDB and Redis run with 1 replica each — do not scale them.
 - See [Overleaf GitHub](https://github.com/overleaf/overleaf) for more details.
+
+## References
+
+- Official site: <https://www.overleaf.com>
+- Documentation: <https://docs.overleaf.com>
+- GitHub repo: <https://github.com/overleaf/overleaf>
+- YouTube — How To Run Overleaf Locally & For Free!: <https://www.youtube.com/watch?v=jDy9rdgSoHs>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
