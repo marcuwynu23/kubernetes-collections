@@ -103,3 +103,12 @@ This will create all required resources:
 - Configure your SMTP settings in the admin UI (Settings → SMTP) for sending newsletters.
 - Change default credentials in `secret.yaml` (both the keys and inside `config.toml`) before exposing externally.
 - PostgreSQL runs with 1 replica — do not scale it.
+
+## References
+
+- Official site: <https://listmonk.app/>
+- Documentation: <https://listmonk.app/docs>
+- Docker Hub image: <https://hub.docker.com/r/listmonk/listmonk>
+- GitHub repo: <https://github.com/knadh/listmonk>
+- YouTube — Listmonk Tutorial: Set Up a Self-Hosted Newsletter (Docker + VPS): <https://www.youtube.com/watch?v=SxYyjdnnWNQ>
+- Kubernetes documentation: <https://kubernetes.io/docs/>
